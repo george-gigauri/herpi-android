@@ -11,7 +11,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
+import com.gigauri.reptiledb.module.common.AppLanguages
 import com.gigauri.reptiledb.module.core.presentation.HerpiColors
+import com.gigauri.reptiledb.module.feature.main.presentation.bottomsheet.ChooseApplicationLanguageSheet
 import com.gigauri.reptiledb.module.feature.main.presentation.components.DrawerContent
 import com.gigauri.reptiledb.module.feature.main.presentation.navigation.NavigationGraph
 import com.gigauri.reptiledb.module.feature.main.presentation.navigation.Pages
@@ -60,6 +62,14 @@ fun MainScreen(
                     else drawerState.open()
                 }
             }
+        )
+    }
+
+    if (selectedLanguage == null) {
+        ChooseApplicationLanguageSheet(
+            languages = AppLanguages.entries.toList(),
+            onRemember = { viewModel.onEvent(MainEvent.SetLanguage(it)) },
+            onCancel = { }
         )
     }
 }
