@@ -1,0 +1,86 @@
+name: Deploy to Google Play (Internal Testing)
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Fill local.properties
+        run: |
+          echo 'MAPS_API_KEY=${{ secrets.MAPS_API_KEY }}' >> local.properties
+          echo 'FACEBOOK_CLIENT_TOKEN=${{ secrets.FACEBOOK_CLIENT_TOKEN }}' >> local.properties
+          echo 'FACEBOOK_APP_ID=${{ secrets.FACEBOOK_APP_ID }}' >> local.properties
+          echo 'STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}' >> local.properties
+          echo 'KEY_PASSWORD=${{ secrets.PROJECT_KEY_PASSWORD }}' >> local.properties
+          echo 'KEY_ALIAS=${{ secrets.PROJECT_KEY_ALIAS }}' >> local.properties
+
+      - name: Create Keystore File
+        run: touch app/keystore_file.jks
+
+      - name: Decode and Encode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/keystore_file.jks
+
+      - name: Create google-services.json
+        run: touch app/google-services.json
+
+      - name: Add google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
+
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew bundleRelease
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifact
+          path: app/build/outputs/bundle/release/app-release.aab
+
+      - name: Upload Essential Files
+        uses: actions/upload-artifact@v2
+        with:
+          name: distribution-files
+          path: distribution/whatsnew
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: release-artifact
+          path: app/build/outputs/bundle/release/
+
+      - name: Download Essential Files
+        uses: actions/download-artifact@v2
+        with:
+          name: distribution-files
+          path: distribution/whatsnew
+
+      - name: Start Deploying to Internal Testing
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.gigauri.reptiledb
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: internal
+          inAppUpdatePriority: 3
+          whatsNewDirectory: distribution/whatsnew
