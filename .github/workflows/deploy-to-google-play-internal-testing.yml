@@ -82,6 +82,6 @@ jobs:
           packageName: com.gigauri.reptiledb
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internal
-          inAppUpdatePriority: 3
+          inAppUpdatePriority: 5
           whatsNewDirectory: distribution/whatsnew
           changesNotSentForReview: true
