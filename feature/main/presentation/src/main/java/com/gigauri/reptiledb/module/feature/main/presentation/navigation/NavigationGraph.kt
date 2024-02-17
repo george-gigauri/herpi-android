@@ -16,7 +16,6 @@ import com.gigauri.reptiledb.module.common.util.IntentUtil
 import com.gigauri.reptiledb.module.common.util.SettingsUtil
 import com.gigauri.reptiledb.module.feature.faq.presentation.FaqScreen
 import com.gigauri.reptiledb.module.feature.home.page.HomeScreen
-import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.pages.ReptileDetailsActivity
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.pages.ReptileDetailsScreen
 import com.gigauri.reptiledb.module.feature.search.presentation.pages.SearchScreen
 import com.gigauri.reptiledb.module.feature.team.presentation.TeamScreen
@@ -55,7 +54,7 @@ fun NavigationGraph(
         }
 
         composable(
-            Pages.ReptileDetails.pageId,
+            Pages.ReptileDetails.pageId + "/{id}",
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "${Const.HERPI_URL}/reptiles/{id}/details"
@@ -116,9 +115,7 @@ fun NavigationGraph(
                     navController.navigateUp()
                 },
                 onReptileClick = {
-                    (Intent(context, ReptileDetailsActivity::class.java)).apply {
-                        putExtra(Const.Key.KEY_REPTILE_ID, it.id)
-                    }.let(context::startActivity)
+                    navController.navigate(Pages.ReptileDetails.pageId + "/${it.id}")
                 }
             )
         }
