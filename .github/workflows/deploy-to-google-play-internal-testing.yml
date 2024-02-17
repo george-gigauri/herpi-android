@@ -84,3 +84,4 @@ jobs:
           track: internal
           inAppUpdatePriority: 3
           whatsNewDirectory: distribution/whatsnew
+          changesNotSentForReview: true
