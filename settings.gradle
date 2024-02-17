@@ -1,0 +1,42 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "ReptileDB"
+include ':app'
+include ':feature'
+include ':feature:main'
+include ':feature:home'
+include ':feature:home:data'
+include ':feature:home:domain'
+include ':feature:home:presentation'
+include ':feature:main:data'
+include ':feature:main:domain'
+include ':feature:main:presentation'
+include ':core'
+include ':common'
+include ':core:data'
+include ':core:domain'
+include ':core:presentation'
+include ':feature:reptileDetails'
+include ':feature:reptileDetails:data'
+include ':feature:reptileDetails:domain'
+include ':feature:reptileDetails:presentation'
+include ':feature:search'
+include ':feature:search:data'
+include ':feature:search:domain'
+include ':feature:search:presentation'
+include ':imageViewer'
+include ':feature:team'
+include ':feature:team:data'
+include ':feature:team:domain'
+include ':feature:team:presentation'
+include ':feature:faq'
+include ':feature:faq:data'
+include ':feature:faq:domain'
+include ':feature:faq:presentation'

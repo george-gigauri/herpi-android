@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">მთავარი</string>
+    <string name="nav_faq">ხშირად დასმული კიხვები</string>
+    <string name="nav_contact">კონტაქტი</string>
+    <string name="nav_team">გუნდი</string>
+</resources>

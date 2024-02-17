@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_region">რეგიონი</string>
+    <string name="hint_search_here">ძიება…</string>
+    <string name="error_cant_retrieve_location">რეგიონის არჩევა</string>
+    <string name="title_nearby_species">შენს არეალში</string>
+    <string name="subtitle_nearby_species">სახეობები, რომლებსაც შენს არეალში შეიძლება გადააწყდე</string>
+    <string name="title_all_species">ყველა სახეობა</string>
+    <string name="subtitle_all_species">ყველა ოფიციალურად რეგისტრირებული სახეობა ქვეყანაში</string>
+    <string name="mildly_venomous">სუსტი შხამი</string>
+    <string name="venomous">შხამიანი</string>
+    <string name="nonvenomous">უშხამო</string>
+    <string name="btn_details">დეტალურად</string>
+    <string name="title_how_we_use_your_location">ჩვენ გვჭირდება თქვენი ნებართვა, რომ დავამუშავოთ თქვენი ადგილმდებარეობა</string>
+    <string name="message_how_we_use_your_location">თქვენი ამჟამინდელი ადგილმდებარეობა გამოიყენება თქვენს არეალში გავრცელებული სახეობების მოსაძებნად. ადგილმდებარეობის შესახებ ინფორმაციას მხოლოდ ერთჯერადად ვიყენებთ და არ ვანთავსებთ ან/და ვინახავთ სერვერზე.</string>
+    <string name="btn_understood">გასაგებია</string>
+    <string name="title_location_unavailable">ადგილმდებარეობა გამორთულია</string>
+    <string name="message_location_unavailable">თქვენი ამჟამინდელი ადგილმდებარეობის დადგენა ვერ მოხერხდა. თქვენს ამჟამინდელ ადგილმდებარეობას ვიყენეთ თქვენს არეალში გავრცელებული სახეობების მოსაძებნად, შესაბამისად, ამ მომენტში, ამ ფუნქციით სარგებლობას ვერ შეძლებთ. გთხოტ ჩართოთ GPS ან დაგვიკავშირდეთ.</string>
+    <string name="btn_settings">პარამეტრები</string>
+    <string name="title_pick_custom_location">რეგიონის არჩევა</string>
+    <string name="subtitle_pick_custom_location">რეგიონის ასარჩევად მონიშნე სასურველი არეალი რუკაზე</string>
+    <string name="btn_complete">დასრულება</string>
+    <string name="btn_cancel">გაუქმება</string>
+    <string name="message_nearby_species_not_found">შენს არეალში გავრცელებული სახეობები ვერ მოიძებნა… შესაძლო მიზეზი შეიძლება იყოს ის რომ არ იმყოფებით ამჟამად აქტიურ ქვეყნებში, არ გაქვთ ადგილმდებარეობის გაზიარებაზე წვდომა მოცემული ან გამორთული გაქვთ GPS. გთხოვთ შეამოწმოთ ადგილმდებარეობის პარამეტრები ან დაგვიკავშირდით.</string>
+    <string name="label_offline_mode">უინტერნეტო</string>
+</resources>

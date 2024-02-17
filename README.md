@@ -1,0 +1,1 @@
+ar dagaviwydes dawera mere

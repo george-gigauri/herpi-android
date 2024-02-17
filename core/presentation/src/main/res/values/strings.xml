@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_mildly_venomous">Mild Venom</string>
+    <string name="label_venomous">Venomous</string>
+    <string name="label_non_venomous">Harmless</string>
+</resources>

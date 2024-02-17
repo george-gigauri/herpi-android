@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_mildly_venomous">სუსტი შხამი</string>
+    <string name="label_venomous">შხამიანი</string>
+    <string name="label_non_venomous">უშხამო</string>
+</resources>

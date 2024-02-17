@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_description">Description</string>
+    <string name="title_gallery">Gallery</string>
+    <string name="title_coverage_areas">Distribution</string>
+    <string name="btn_expand_map">Expand Map</string>
+    <string name="title_expanded_distribution">Distribution</string>
+    <string name="subtitle_expanded_distribution">Areas selected in dark green are official encounters of this specie</string>
+</resources>

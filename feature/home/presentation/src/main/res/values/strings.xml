@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_region">Region</string>
+    <string name="hint_search_here">Search Here…</string>
+    <string name="error_cant_retrieve_location">Pick Region Manually</string>
+    <string name="title_nearby_species">Near You</string>
+    <string name="subtitle_nearby_species">Species you may encounter based on you location</string>
+    <string name="title_all_species">All Species</string>
+    <string name="subtitle_all_species">Every officially registered specie in the country</string>
+    <string name="mildly_venomous">Mild Venom</string>
+    <string name="venomous">Venomous</string>
+    <string name="nonvenomous">Harmless</string>
+    <string name="btn_details">Read More</string>
+    <string name="title_how_we_use_your_location">We Need Your Permission to Access Location</string>
+    <string name="message_how_we_use_your_location">Your current location is used to find species you may encounter in your area. Provided information is one-time only and we DO NOT store them on our servers.</string>
+    <string name="btn_understood">Understood</string>
+    <string name="title_location_unavailable">Location Service is Not Available</string>
+    <string name="message_location_unavailable">Couldn\'t retrieve your current location. Current location is used to find species you may encounter in your area, so you won\'t be able to use this feature right now. \n\nCheck your location settings to turn on GPS.</string>
+    <string name="btn_settings">Settings</string>
+    <string name="title_pick_custom_location">Pick Location Manually</string>
+    <string name="subtitle_pick_custom_location">Pick your location manually tapping on deisred area</string>
+    <string name="btn_complete">Complete</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="message_nearby_species_not_found">Nearby species not found… This may be because you are outside of the supported countries, your GPS is turned off or you did not allow us to access your location. Please turn GPS on and try again or pick your location manually. If the problem persists, contact us.</string>
+    <string name="label_offline_mode">Offline Mode</string>
+</resources>

@@ -1,0 +1,60 @@
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/.gradle/caches/transforms-3/12ca5075712463ea91d80dd68689e6ff/transformed/material-1.5.0/res/layout/m3_alert_dialog.xml" value="0.12905982905982907" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_bold_alert_circle.xml" value="0.1665" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_bold_bubble.xml" value="0.1665" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_bold_close_square.xml" value="0.139" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_bold_location.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_outline_location_tick.xml" value="0.139" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/ic_vuesax_outline_profile_tick.xml" value="0.1665" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/rounded_rectangle_shape.xml" value="0.1665" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/rounded_square_shape.xml" value="0.1115" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/shape_circle.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/shape_rectangle_100.xml" value="0.14" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/drawable/shape_rounded_100_selectable.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_add_coverage.xml" value="0.22" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_add_reptile.xml" value="0.24693376941946035" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_all_users.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_coverage_map.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_login.xml" value="0.15729166666666666" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_profile.xml" value="0.2889952153110048" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_register.xml" value="0.16666666666666666" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_reptile_details.xml" value="0.4466666666666667" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_reptiles_by_family.xml" value="0.22" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/activity_uploaded_documents.xml" value="0.22" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/bottom_fragment_enter_document_details.xml" value="0.22" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/bottom_fragment_filter_reptile.xml" value="0.4466666666666667" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_gallery_grid.xml" value="0.365625" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_gallery_horizontal.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_multilanguage_input.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_reptile.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_reptile_nearby.xml" value="0.4466666666666667" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_reptile_type.xml" value="0.4466666666666667" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/item_user.xml" value="0.3333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/layout/overlay_image_viewer.xml" value="0.13333333333333333" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1005" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/mipmap-anydpi-v26/ic_launcher_lizard_circle.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/mipmap-anydpi-v26/ic_launcher_lizard_square.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Work Environment/Android/ReptileDB/app/src/main/res/mipmap-anydpi-v26/ic_launcher_square.xml" value="0.1" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/activity_add_coverage.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/activity_reptile_details.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/activity_select_location.xml" value="0.264" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/activity_settings.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/bottom_fragment_enter_document_details.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/bottom_fragment_filter_reptile.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/item_reptile.xml" value="0.264" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/popup_change_language.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/layout/popup_info.xml" value="0.4" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/menu/dark_modes.xml" value="0.20863616930312098" />
+        <entry key="..\:/Work/Android/Projects/ReptileDB/app/src/main/res/xml/main_preferences.xml" value="0.20863616930312098" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK" />
+</project>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hint_search_here">Search Here…</string>
+    <string name="label_search_results">Search Results</string>
+</resources>

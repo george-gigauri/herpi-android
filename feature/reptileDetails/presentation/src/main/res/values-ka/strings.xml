@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_description">აღწერა</string>
+    <string name="title_gallery">გალერეა</string>
+    <string name="title_coverage_areas">გავრცელების არეალ(ებ)ი</string>
+    <string name="btn_expand_map">რუკის გაშლა</string>
+    <string name="title_expanded_distribution">Distribution</string>
+    <string name="subtitle_expanded_distribution">Areas selected in dark green are official encounters of this specie</string>
+</resources>
