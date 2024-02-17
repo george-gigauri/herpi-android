@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -8,7 +11,23 @@ plugins {
     id("com.google.firebase.crashlytics")
 }
 
+fun getSecretKeys(): Properties {
+    val keyFile = project.rootProject.file("local.properties")
+    val secretKeys = Properties()
+    secretKeys.load(FileInputStream(keyFile))
+    return secretKeys
+}
+
 android {
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore_file.jks")
+            storePassword = getSecretKeys()["STORE_PASSWORD"] as? String
+            keyPassword = getSecretKeys()["KEY_PASSWORD"] as? String
+            keyAlias = getSecretKeys()["KEY_ALIAS"] as? String
+        }
+    }
 
     compileSdk = ProjectConfig.compileSdk
 
@@ -36,6 +55,7 @@ android {
         release {
             isDebuggable = false
             isMinifyEnabled = ProjectConfig.isMinifyEnabled
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
