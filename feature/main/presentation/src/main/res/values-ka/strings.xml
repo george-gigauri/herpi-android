@@ -4,4 +4,7 @@
     <string name="nav_faq">ხშირად დასმული კიხვები</string>
     <string name="nav_contact">კონტაქტი</string>
     <string name="nav_team">გუნდი</string>
+    <string name="title_select_language">Choose Language</string>
+    <string name="subtitle_select_language">აირჩიე აპლიკაციის ენა</string>
+    <string name="btn_remember">Remember</string>
 </resources>
