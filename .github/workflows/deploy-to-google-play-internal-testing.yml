@@ -69,11 +69,11 @@ jobs:
           name: release-artifact
           path: app/build/outputs/bundle/release/
 
-      - name: Download Essential Files
-        uses: actions/download-artifact@v2
-        with:
-          name: distribution-files
-          path: distribution/whatsnew
+      #      - name: Download Essential Files
+      #        uses: actions/download-artifact@v2
+      #        with:
+      #          name: distribution-files
+      #          path: distribution/whatsnew
 
       - name: Start Deploying to Internal Testing
         uses: r0adkll/upload-google-play@v1
