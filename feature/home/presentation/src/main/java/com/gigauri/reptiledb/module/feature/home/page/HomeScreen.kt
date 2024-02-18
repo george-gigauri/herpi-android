@@ -70,7 +70,6 @@ import com.gigauri.reptiledb.module.feature.home.state.HomePageState
 import com.gigauri.reptiledb.module.feature.home.viewmodel.HomeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
-import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.rememberPermissionState
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -93,11 +92,8 @@ fun HomeScreen(
     val state: HomePageState by viewModel.state.collectAsStateWithLifecycle()
     val notificationPermission =
         rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
-    val locationPermission = rememberMultiplePermissionsState(
-        permissions = listOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
+    val locationPermission = rememberPermissionState(
+        permission = Manifest.permission.ACCESS_FINE_LOCATION
     )
     var isLocationPermissionInfoDialogVisible by rememberSaveable { mutableStateOf(false) }
     var isLocationUnavailableDialogVisible by rememberSaveable { mutableStateOf(false) }
@@ -133,16 +129,17 @@ fun HomeScreen(
                     notificationPermission.launchPermissionRequest()
                 }
             }
-            isLocationPermissionInfoDialogVisible = !locationPermission.allPermissionsGranted
+            isLocationPermissionInfoDialogVisible =
+                locationPermission.status != PermissionStatus.Granted
             isLocationUnavailableDialogVisible =
-                !LocationUtil.isLocationTurnedOn(context) && locationPermission.allPermissionsGranted
+                !LocationUtil.isLocationTurnedOn(context) && locationPermission.status == PermissionStatus.Granted
 
             viewModel.onEvent(HomeScreenEvent.Load)
         }
     })
 
-    LaunchedEffect(key1 = locationPermission.allPermissionsGranted, block = {
-        if (LocationUtil.isLocationTurnedOn(context) && locationPermission.allPermissionsGranted) {
+    LaunchedEffect(key1 = locationPermission.status, block = {
+        if (LocationUtil.isLocationTurnedOn(context) && locationPermission.status == PermissionStatus.Granted) {
             requestLocation()
         }
     })
@@ -319,11 +316,7 @@ fun HomeScreen(
         LocationPermissionInformationDialog(
             onUnderstoodClick = {
                 isLocationPermissionInfoDialogVisible = false
-                if (locationPermission.shouldShowRationale) {
-                    locationPermission.launchMultiplePermissionRequest()
-                } else {
-                    SettingsUtil.openAppPermissionSettings(context as Activity)
-                }
+                locationPermission.launchPermissionRequest()
             },
             onCancel = {
                 isLocationPermissionInfoDialogVisible = false
