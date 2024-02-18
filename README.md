@@ -9,7 +9,7 @@ Herpi არის საქართველოში გავრცელე
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](/screenshots/screenshots.png)
 
 ## Tech Stack
 
