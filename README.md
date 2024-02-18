@@ -53,9 +53,9 @@ Herpi არის საქართველოში გავრცელე
 
 ხელმისაწვდომია პროექტის iOS და ვებ ვერსიებიც
 
-[Herpi iOS](https://github.com/matiassingers/awesome-readme)
+[Herpi iOS](https://github.com/wirgvava/Herpi_iOS)
 
-[https://herpi.ge](https://github.com/matiassingers/awesome-readme)
+[https://herpi.ge](https://herpi.ge)
 
 ## License
 
