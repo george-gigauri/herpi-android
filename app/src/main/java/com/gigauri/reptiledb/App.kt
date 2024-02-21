@@ -11,8 +11,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         FacebookSdk.setClientToken(BuildConfig.FACEBOOK_CLIENT_ID)
+        FacebookSdk.fullyInitialize()
         AudienceNetworkAds.initialize(this)
     }
 }

@@ -34,14 +34,11 @@
 
                 <data android:scheme="https" />
                 <data android:host="herpi.ge" />
-                <data android:path="/" />
-                <data android:path="/reptiles/:id/details" />
+                <data android:path="/reptiles" />
                 <data android:path="/faq" />
 
             </intent-filter>
         </activity>
-
-        <activity android:name=".module.feature.reptileDetails.presentation.pages.ReptileDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
