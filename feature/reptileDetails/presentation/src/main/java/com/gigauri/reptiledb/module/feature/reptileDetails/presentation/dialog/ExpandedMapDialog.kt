@@ -87,14 +87,16 @@ fun ExpandedMapDialog(
             ) {
 
                 areas.map {
-                    Polygon(
-                        points = it.coordinates.map { c -> LatLng(c.lat, c.lng) },
-                        fillColor = HerpiColors.DarkGreenMain.copy(alpha = 0.5f),
-                        strokeColor = HerpiColors.DarkGreenMain,
-                        strokeWidth = 12f,
-                        geodesic = true,
-                        strokeJointType = JointType.ROUND
-                    )
+                    if (it.coordinates.isNotEmpty()) {
+                        Polygon(
+                            points = it.coordinates.map { c -> LatLng(c.lat, c.lng) },
+                            fillColor = HerpiColors.DarkGreenMain.copy(alpha = 0.5f),
+                            strokeColor = HerpiColors.DarkGreenMain,
+                            strokeWidth = 12f,
+                            geodesic = true,
+                            strokeJointType = JointType.ROUND
+                        )
+                    }
                 }
             }
 

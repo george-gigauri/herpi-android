@@ -123,10 +123,6 @@ fun Reptile(
             modifier = Modifier
                 .width(136.dp)
                 .fillMaxHeight()
-                .background(
-                    HerpiColors.CreamyYellow,
-                    RoundedCornerShape(topStart = 32.dp, bottomStart = 32.dp)
-                )
         )
     }
 }
