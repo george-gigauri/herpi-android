@@ -30,7 +30,7 @@ sealed class Pages(
     data object Faq : Pages(
         R.string.nav_faq,
         true,
-        "routes"
+        "faq"
     )
 
     data object Search : Pages(
