@@ -38,7 +38,6 @@ fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "${Const.HERPI_URL}"
-                    action = Intent.ACTION_VIEW
                 }
             )
         ) {
@@ -58,7 +57,6 @@ fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "${Const.HERPI_URL}/reptiles/{id}/details"
-                    action = Intent.ACTION_VIEW
                 }
             ),
             arguments = listOf(
@@ -97,7 +95,6 @@ fun NavigationGraph(
             deepLinks = listOf(
                 navDeepLink {
                     uriPattern = "${Const.HERPI_URL}/faq"
-                    action = Intent.ACTION_VIEW
                 }
             )
         ) {

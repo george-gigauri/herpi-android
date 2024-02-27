@@ -1,9 +1,13 @@
 package com.gigauri.reptiledb.module.feature.main.presentation
 
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +26,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
+    intent: Intent,
     viewModel: MainViewModel
 ) {
     val navController = rememberNavController()

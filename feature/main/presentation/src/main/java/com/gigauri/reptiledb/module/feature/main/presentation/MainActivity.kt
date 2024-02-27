@@ -24,6 +24,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -45,7 +48,7 @@ class MainActivity : ComponentActivity() {
         initInAppUpdate()
         setContent {
             HerpiDefaultTheme {
-                MainScreen(viewModel)
+                MainScreen(intent, viewModel)
             }
         }
     }

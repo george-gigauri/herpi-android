@@ -22,27 +22,27 @@
         <activity
             android:name=".module.feature.main.presentation.MainActivity"
             android:exported="true">
+            <tools:validation testUrl="https://herpi.ge/faq" />
+            <tools:validation testUrl="https://herpi.ge/" />
+            <tools:validation testUrl="https://herpi.ge/reptiles/15/details" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:autoVerify="true">
+            <intent-filter android:autoVerify="true"
+                tools:targetApi="m">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.OPENABLE" />
 
                 <data android:scheme="https" />
                 <data android:host="herpi.ge" />
-                <data android:pathPrefix="/" />
-
-                <data android:scheme="https" />
-                <data android:host="herpi.ge" />
+                <data android:path="/" />
                 <data android:pathPrefix="/faq" />
-
-                <data android:scheme="https" />
-                <data android:host="herpi.ge" />
-                <data android:pathPrefix="/reptiles/" />
+                <data android:pathPattern="/reptiles/.*/details" />
             </intent-filter>
         </activity>
 
