@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -25,20 +26,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="herpi.ge"
-                    android:pathPrefix="/reptiles/"
-                    android:scheme="https" />
-                <data android:host="herpi.ge" />
-                <data android:pathAdvancedPattern="/reptiles/*/details" />
-            </intent-filter>
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -46,28 +34,16 @@
 
                 <data android:scheme="https" />
                 <data android:host="herpi.ge" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:pathPrefix="/" />
 
                 <data android:scheme="https" />
                 <data android:host="herpi.ge" />
-                <data android:pathPattern="/faq" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:pathPrefix="/faq" />
 
                 <data android:scheme="https" />
                 <data android:host="herpi.ge" />
-                <data android:pathPattern="/faq" />
+                <data android:pathPrefix="/reptiles/" />
             </intent-filter>
-
         </activity>
 
         <meta-data
