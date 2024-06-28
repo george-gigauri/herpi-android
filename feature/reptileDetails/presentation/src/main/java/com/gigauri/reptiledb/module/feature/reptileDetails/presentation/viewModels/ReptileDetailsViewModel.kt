@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gigauri.reptiledb.module.common.Const
+import com.gigauri.reptiledb.module.core.domain.common.ErrorType
 import com.gigauri.reptiledb.module.core.domain.common.Resource
 import com.gigauri.reptiledb.module.core.domain.usecase.analytics.AnalyticsLogger
 import com.gigauri.reptiledb.module.core.domain.usecase.app.GetAppLanguage
@@ -68,7 +69,9 @@ class ReptileDetailsViewModel @Inject constructor(
             }
 
             is Resource.Error -> {
-                _state.update { it.copy(error = details.errorType) }
+                if (details.errorType !is ErrorType.Network) {
+                    _state.update { it.copy(error = details.errorType) }
+                }
             }
 
             else -> Unit
@@ -83,7 +86,9 @@ class ReptileDetailsViewModel @Inject constructor(
             }
 
             is Resource.Error -> {
-                _state.update { it.copy(error = data.errorType) }
+                if (data.errorType !is ErrorType.Network) {
+                    _state.update { it.copy(error = data.errorType) }
+                }
             }
 
             else -> Unit

@@ -12,6 +12,19 @@ object Const {
         const val CONTACT = "$HERPI_URL/contact"
     }
 
+    object Notification {
+        object Channel {
+            const val AUTO_UPDATE_OFFLINE_DATA = "update_offline_data"
+        }
+    }
+
+    object Time {
+        const val ONE_MINUTE = 1000 * 60
+        const val ONE_HOUR = 1000 * 60 * 60
+        const val ONE_DAY = 1000 * 60 * 60 * 24
+        const val ONE_WEEK = 1000 * 60 * 60 * 24 * 7
+    }
+
     object Event {
         const val SELECT_CATEGORY = "select_category" // category_id (SNAKE, LIZARD...)
         const val SET_LANGUAGE = "set_language" // language_code (ka, en...)
