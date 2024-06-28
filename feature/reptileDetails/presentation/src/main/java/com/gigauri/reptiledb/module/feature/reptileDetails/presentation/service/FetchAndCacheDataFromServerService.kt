@@ -1,14 +1,17 @@
 package com.gigauri.reptiledb.module.feature.reptileDetails.presentation.service
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import coil.executeBlocking
 import coil.imageLoader
 import coil.memory.MemoryCache
@@ -68,16 +71,16 @@ class FetchAndCacheDataFromServerService : Service() {
 
         scope.launch {
             val elapsedTime = System.currentTimeMillis() - getDataLastSyncTime.execute()
-            if (elapsedTime >= (3 * Const.Time.ONE_WEEK)) {
+            if (elapsedTime < (3 * Const.Time.ONE_WEEK)) {
                 stop()
-                job.cancel()
+                return@launch
             }
 
-            if (this@FetchAndCacheDataFromServerService.isOnline()) {
+            if (this@FetchAndCacheDataFromServerService.isOnline() && isNotificationPermissionGranted()) {
                 deleteReptilesFromDatabase.execute()
             } else {
                 stop()
-                job.cancel()
+                return@launch
             }
 
             var page = 0
@@ -86,7 +89,7 @@ class FetchAndCacheDataFromServerService : Service() {
             while (isRunning) {
                 getAllReptiles.fromRemote(
                     page = page,
-                    pageSize = 20,
+                    pageSize = 10,
                 ).let { result ->
                     when (result) {
                         is Resource.Success -> {
@@ -98,30 +101,48 @@ class FetchAndCacheDataFromServerService : Service() {
                                     getReptileDetails.execute(reptile.id).let { details ->
                                         when (details) {
                                             is Resource.Success -> {
+                                                // Transparent Thumbnail
                                                 ImageRequest.Builder(this@FetchAndCacheDataFromServerService)
                                                     .data(details.data.transparentThumbnailUrl)
                                                     .diskCachePolicy(CachePolicy.ENABLED)
                                                     .memoryCachePolicy(CachePolicy.ENABLED)
                                                     .networkCachePolicy(CachePolicy.ENABLED)
+                                                    .allowHardware(false)
                                                     .build().let { builder ->
-                                                        this@FetchAndCacheDataFromServerService.imageLoader.executeBlocking(
+                                                        this@FetchAndCacheDataFromServerService.imageLoader.execute(
                                                             builder
                                                         ).drawable
                                                     }
 
-                                                details.data.gallery.forEach { g ->
-                                                    ImageRequest.Builder(this@FetchAndCacheDataFromServerService)
-                                                        .data(g.url)
-                                                        .diskCachePolicy(CachePolicy.ENABLED)
-                                                        .memoryCachePolicy(CachePolicy.DISABLED)
-                                                        .networkCachePolicy(CachePolicy.DISABLED)
-                                                        .allowConversionToBitmap(true)
-                                                        .build().let { builder ->
-                                                            this@FetchAndCacheDataFromServerService.imageLoader.executeBlocking(
-                                                                builder
-                                                            ).drawable
-                                                        }
-                                                }
+                                                // Cover Thumbnail
+                                                ImageRequest.Builder(this@FetchAndCacheDataFromServerService)
+                                                    .data(details.data.thumbnailUrl)
+                                                    .diskCachePolicy(CachePolicy.ENABLED)
+                                                    .memoryCachePolicy(CachePolicy.ENABLED)
+                                                    .networkCachePolicy(CachePolicy.ENABLED)
+                                                    .allowHardware(false)
+                                                    .build().let { builder ->
+                                                        this@FetchAndCacheDataFromServerService.imageLoader.execute(
+                                                            builder
+                                                        ).drawable
+                                                    }
+
+                                                // Gallery items
+                                                details.data.gallery.map { g ->
+                                                    async {
+                                                        ImageRequest.Builder(this@FetchAndCacheDataFromServerService)
+                                                            .data(g.url)
+                                                            .diskCachePolicy(CachePolicy.ENABLED)
+                                                            .memoryCachePolicy(CachePolicy.ENABLED)
+                                                            .networkCachePolicy(CachePolicy.ENABLED)
+                                                            .allowHardware(false)
+                                                            .build().let { builder ->
+                                                                this@FetchAndCacheDataFromServerService.imageLoader.execute(
+                                                                    builder
+                                                                ).drawable
+                                                            }
+                                                    }
+                                                }.awaitAll()
 
                                             }
 
@@ -179,6 +200,17 @@ class FetchAndCacheDataFromServerService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             stopForeground(STOP_FOREGROUND_REMOVE)
         } else stopForeground(true)
+    }
+
+    private fun isNotificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
     }
 
     override fun onDestroy() {
