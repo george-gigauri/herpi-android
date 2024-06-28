@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class ReptileRepositoryImpl @Inject constructor(
     private val api: ReptileAPI,
-    private val reptileDao: ReptileDao
+    private val reptileDao: ReptileDao,
 ) : ReptileRepository {
 
     override suspend fun getNearby(
