@@ -6,4 +6,6 @@
     <string name="btn_expand_map">რუკის გაშლა</string>
     <string name="title_expanded_distribution">Distribution</string>
     <string name="subtitle_expanded_distribution">Areas selected in dark green are official encounters of this specie</string>
+    <string name="title_updating_data_for_offline">Updating Data...</string>
+    <string name="subtitle_updating_data_for_offline">Preparing data for offline usage...</string>
 </resources>

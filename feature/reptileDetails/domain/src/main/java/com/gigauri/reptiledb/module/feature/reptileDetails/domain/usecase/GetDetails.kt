@@ -11,12 +11,12 @@ class GetDetails @Inject constructor(
 ) {
 
     suspend fun execute(reptileId: Long): Resource<ReptileFull> {
-        return repository.getReptileDetails(reptileId).let {
+        return repository.getReptileDetails(reptileId).let { it ->
             if (it is Resource.Success) {
                 repository.insertToDatabase(it.data)
             }
-            repository.getByIdFromDatabase(reptileId)?.let {
-                Resource.Success(it)
+            repository.getByIdFromDatabase(reptileId)?.let { offlineData ->
+                Resource.Success(offlineData)
             } ?: Resource.Error(
                 errorType = ErrorType.Generic(NullPointerException("Could not find data from database"))
             )

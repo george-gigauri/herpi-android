@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -35,8 +36,12 @@ object NetworkModule {
     fun provideOkHttpClient(context: Context, dataStore: PreferencesDataStore): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(ChuckerInterceptor.Builder(context).build())
-            .readTimeout(1, TimeUnit.MINUTES)
-            .writeTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .writeTimeout(20, TimeUnit.SECONDS)
+            .cache(Cache(
+                context.cacheDir,
+                50 * 1024 * 1024
+            ))
             .addInterceptor { chain ->
                 val language: String = runBlocking { dataStore.getLanguage().first() ?: "ka" }
                 val original: Request = chain.request()
