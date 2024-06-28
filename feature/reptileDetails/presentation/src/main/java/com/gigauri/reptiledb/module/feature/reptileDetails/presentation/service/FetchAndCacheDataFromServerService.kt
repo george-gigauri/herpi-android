@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import coil.executeBlocking
 import coil.imageLoader
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
@@ -67,7 +68,7 @@ class FetchAndCacheDataFromServerService : Service() {
 
         scope.launch {
             val elapsedTime = System.currentTimeMillis() - getDataLastSyncTime.execute()
-            if (elapsedTime < (1 * Const.Time.ONE_MINUTE)) {
+            if (elapsedTime >= (3 * Const.Time.ONE_WEEK)) {
                 stop()
                 job.cancel()
             }
@@ -102,14 +103,13 @@ class FetchAndCacheDataFromServerService : Service() {
                                                     .diskCachePolicy(CachePolicy.ENABLED)
                                                     .memoryCachePolicy(CachePolicy.ENABLED)
                                                     .networkCachePolicy(CachePolicy.ENABLED)
-                                                    .allowConversionToBitmap(true)
                                                     .build().let { builder ->
-                                                        this@FetchAndCacheDataFromServerService.imageLoader.enqueue(
+                                                        this@FetchAndCacheDataFromServerService.imageLoader.executeBlocking(
                                                             builder
-                                                        )
+                                                        ).drawable
                                                     }
 
-                                                details.data.gallery.map { g ->
+                                                details.data.gallery.forEach { g ->
                                                     ImageRequest.Builder(this@FetchAndCacheDataFromServerService)
                                                         .data(g.url)
                                                         .diskCachePolicy(CachePolicy.ENABLED)
@@ -117,11 +117,12 @@ class FetchAndCacheDataFromServerService : Service() {
                                                         .networkCachePolicy(CachePolicy.DISABLED)
                                                         .allowConversionToBitmap(true)
                                                         .build().let { builder ->
-                                                            this@FetchAndCacheDataFromServerService.imageLoader.enqueue(
+                                                            this@FetchAndCacheDataFromServerService.imageLoader.executeBlocking(
                                                                 builder
-                                                            )
+                                                            ).drawable
                                                         }
                                                 }
+
                                             }
 
                                             else -> Unit
