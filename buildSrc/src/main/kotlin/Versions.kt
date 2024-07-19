@@ -6,7 +6,7 @@ object Versions {
     const val activityCompose = "1.9.0"
     const val accompanist = "0.28.0"
     const val navigation = "2.7.7"
-    const val composeCompiler = "1.5.9"
+    const val composeCompiler = "1.5.14"
     const val material3 = "1.2.1"
     const val facebookSdk = "15.0.2"
     const val audienceNetwork = "6.14.0"
