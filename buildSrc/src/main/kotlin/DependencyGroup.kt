@@ -28,6 +28,7 @@ fun DependencyHandler.hiltCompose() {
 
 fun DependencyHandler.hilt() {
     implementation("com.google.dagger:hilt-android:${Versions.hilt}")
+    implementation("androidx.hilt:hilt-work:1.0.0")
     ksp("com.google.dagger:hilt-compiler:${Versions.hilt}")
 }
 
@@ -54,6 +55,10 @@ fun DependencyHandler.room() {
 fun DependencyHandler.dataStore() {
     implementation("androidx.datastore:datastore:${Versions.dataStore}")
     implementation("androidx.datastore:datastore-preferences:${Versions.dataStore}")
+}
+
+fun DependencyHandler.workManager() {
+    implementation("androidx.work:work-runtime-ktx:${Versions.workManager}")
 }
 
 fun DependencyHandler.roomPaging() {

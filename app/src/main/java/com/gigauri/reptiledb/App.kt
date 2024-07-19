@@ -6,10 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.facebook.FacebookSdk
 import com.facebook.ads.AudienceNetworkAds
 import com.gigauri.reptiledb.module.common.BuildConfig
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.service.FetchAndCacheDataFromServerService
+import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.workManager.UpdateOfflineDataWorker
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,12 +20,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @HiltAndroidApp
-class App : Application() {
-
-    private val job = SupervisorJob()
-    private val scope = CoroutineScope(Dispatchers.Main + job)
+class App : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
@@ -30,47 +31,14 @@ class App : Application() {
         FacebookSdk.fullyInitialize()
         AudienceNetworkAds.initialize(this)
 
-        scope.launch {
-            if (isNotificationPermissionGranted()) {
-                Intent(this@App, FetchAndCacheDataFromServerService::class.java).let {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        startForegroundService(it)
-                    } else {
-                        startService(it)
-                    }
-                }
-            } else {
-                for (i in 0..15) {
-                    delay(2500)
-                    if (isNotificationPermissionGranted()) {
-                        Intent(this@App, FetchAndCacheDataFromServerService::class.java).let {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                startForegroundService(it)
-                            } else {
-                                startService(it)
-                            }
-                        }
-                        break
-                    }
-                }
-                job.cancel()
-            }
-        }
+        UpdateOfflineDataWorker.startPeriodicWork(this@App)
     }
 
-    private fun isNotificationPermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
 
-    override fun onTerminate() {
-        super.onTerminate()
-        job.cancel()
-    }
+    override val workManagerConfiguration: Configuration
+        get() = Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 }
