@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
@@ -52,16 +53,13 @@ class UpdateOfflineDataWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
+
         val elapsedTime = System.currentTimeMillis() - getDataLastSyncTime.execute()
-        if (elapsedTime < (2 * Const.Time.ONE_WEEK)) {
-            return Result.failure()
+        if (elapsedTime < (1 * Const.Time.ONE_WEEK)) {
+            return Result.retry()
         }
 
-        if (context.isOnline() && isNotificationPermissionGranted()) {
-            deleteReptilesFromDatabase.execute()
-        } else {
-            return Result.failure()
-        }
+        deleteReptilesFromDatabase.execute()
 
         var page = 0
         var isRunning = true
@@ -145,22 +143,11 @@ class UpdateOfflineDataWorker @AssistedInject constructor(
         return Result.success()
     }
 
-    private fun isNotificationPermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
-    }
-
     companion object {
         fun startPeriodicWork(context: Context) {
             val periodicWorkRequest = PeriodicWorkRequestBuilder<UpdateOfflineDataWorker>(
-                2, TimeUnit.DAYS
-            )
+                3, TimeUnit.DAYS,
+            ).setInitialDelay(1, TimeUnit.SECONDS)
                 .setConstraints(
                     Constraints.Builder()
                         .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -172,7 +159,7 @@ class UpdateOfflineDataWorker @AssistedInject constructor(
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 "update_offline_data",
-                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 periodicWorkRequest
             )
         }

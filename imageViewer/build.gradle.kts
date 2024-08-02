@@ -50,15 +50,13 @@ dependencies {
 
     // Compose
     implementation("androidx.compose.runtime:runtime:1.6.8")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.3")
-    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
+    implementation("androidx.activity:activity-compose:1.9.1")
     implementation("androidx.compose.ui:ui:1.6.8")
     debugImplementation("androidx.compose.ui:ui-tooling-preview:1.6.8")
     implementation("androidx.compose.material3:material3:1.2.1")
     debugImplementation("androidx.compose.ui:ui-tooling:1.6.8")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
     implementation("net.engawapg.lib:zoomable:1.6.0")
-
-    api("com.google.accompanist:accompanist-pager:0.34.0")
     // api("androidx.compose.foundation:foundation:1.6.1")
 }
