@@ -1,5 +1,6 @@
 package ge.herpi.imageviewer
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,8 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -21,12 +27,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
@@ -39,9 +47,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
+import kotlinx.coroutines.launch
 import net.engawapg.lib.zoomable.rememberZoomState
 import net.engawapg.lib.zoomable.zoomable
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FullScreenImageViewer(
     images: List<String?>,
@@ -51,10 +61,9 @@ fun FullScreenImageViewer(
     onClose: () -> Unit = {}
 ) {
 
-    val pagerState = com.google.accompanist.pager.rememberPagerState(initialPage = 0)
-    var currentImageIndex: Int by rememberSaveable {
-        mutableIntStateOf(defaultPageIndex)
-    }
+    val pagerState = rememberPagerState(initialPage = defaultPageIndex) { images.size }
+    val scope = rememberCoroutineScope()
+    var currentImageIndex: Int by rememberSaveable { mutableIntStateOf(defaultPageIndex) }
     var currentImageState: AsyncImagePainter.State by remember {
         mutableStateOf(AsyncImagePainter.State.Empty)
     }
@@ -62,6 +71,10 @@ fun FullScreenImageViewer(
     LaunchedEffect(key1 = Unit, block = {
         pagerState.scrollToPage(defaultPageIndex)
     })
+
+    LaunchedEffect(key1 = pagerState.targetPage) {
+        currentImageIndex = pagerState.targetPage
+    }
 
     Dialog(
         onDismissRequest = onClose,
@@ -79,10 +92,9 @@ fun FullScreenImageViewer(
                 .background(Color.Black.copy(alpha = 0.5f))
         ) {
 
-            com.google.accompanist.pager.HorizontalPager(
-                count = images.size
+            HorizontalPager(
+                state = pagerState
             ) { page ->
-                currentImageIndex = page
 
                 if (images.isNotEmpty()) {
                     val imageUrl = images[currentImageIndex]
@@ -127,6 +139,51 @@ fun FullScreenImageViewer(
                         .align(Alignment.Center)
                 )
             }
+
+            // Previous Photo
+            if (currentImageIndex > 0) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowLeft,
+                    contentDescription = null,
+                    tint = White,
+                    modifier = Modifier
+                        .size(72.dp)
+                        .padding(16.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    pagerState.currentPage - 1
+                                )
+                            }
+                        }
+                        .background(Black.copy(alpha = 0.5f))
+                        .align(Alignment.CenterStart)
+                )
+            }
+
+            // Next Photo
+            if (currentImageIndex < images.size - 1) {
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = White,
+                    modifier = Modifier
+                        .size(72.dp)
+                        .padding(16.dp)
+                        .clip(CircleShape)
+                        .clickable {
+                            scope.launch {
+                                pagerState.animateScrollToPage(
+                                    pagerState.currentPage + 1
+                                )
+                            }
+                        }
+                        .background(Black.copy(alpha = 0.5f))
+                        .align(Alignment.CenterEnd)
+                )
+            }
+
 
             // TopBar Controls
             Row(
