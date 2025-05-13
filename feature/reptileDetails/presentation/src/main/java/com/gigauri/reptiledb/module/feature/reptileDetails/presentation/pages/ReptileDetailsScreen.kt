@@ -196,7 +196,7 @@ fun ReptileDetailsScreen(
                 onBack = { onBackClick() },
                 onShare = {
                     IntentUtil.shareUrl(
-                        "${Const.BASE_URL}/reptiles/${state.data?.id}/details/preview",
+                        "${Const.BASE_URL}reptiles/${state.data?.id}/details",
                         (context as Activity)
                     )
                     viewModel.analytics.logEvent(
