@@ -46,7 +46,7 @@ fun Category(
     ) {
         Box(
             modifier = Modifier
-                .size(90.dp, 80.dp)
+                .size(90.dp, 95.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(
                     if (isSelected) HerpiColors.DarkGreenMain
@@ -62,7 +62,7 @@ fun Category(
                 colorFilter = ColorFilter.tint(if (isSelected) HerpiColors.White else HerpiColors.DarkGray),
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(20.dp)
             )
 
             if (isLoading) {

@@ -41,7 +41,7 @@ fun TopBar(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(vertical = 16.dp)
+            .padding(vertical = 20.dp)
     ) {
 
         // Drawer Burger Icon
@@ -51,7 +51,7 @@ fun TopBar(
             contentDescription = null,
             tint = HerpiColors.White,
             modifier = Modifier
-                .size(54.dp)
+                .size(56.dp)
                 .clip(CircleShape)
                 .clickable { onDrawerClick() }
                 .padding(15.dp)
@@ -111,7 +111,7 @@ fun TopBar(
             contentDescription = null,
             tint = HerpiColors.White,
             modifier = Modifier
-                .size(54.dp)
+                .size(56.dp)
                 .clip(CircleShape)
                 .clickable { onChatClick() }
                 .padding(12.dp)
