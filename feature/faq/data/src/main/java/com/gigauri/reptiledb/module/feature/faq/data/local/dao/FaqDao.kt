@@ -10,10 +10,10 @@ import com.gigauri.reptiledb.module.feature.faq.data.local.model.FaqEntity
 interface FaqDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(list: List<FaqEntity>)
+    suspend fun insertAll(list: List<FaqEntity>): Unit
 
     @Query("DELETE FROM frequently_asked_questions")
-    suspend fun deleteAll()
+    suspend fun deleteAll(): Unit
 
     @Query("SELECT * FROM frequently_asked_questions")
     suspend fun getAll(): List<FaqEntity>

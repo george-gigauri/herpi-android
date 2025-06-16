@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.21"
 }
 
 android {
@@ -55,9 +56,9 @@ dependencies {
     implementation(project(path = ":feature:faq:domain"))
     implementation(project(path = ":feature:faq:presentation"))
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.google.android.material:material:1.12.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -68,4 +69,6 @@ dependencies {
     compose()
     hilt()
     hiltCompose()
+
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
 }

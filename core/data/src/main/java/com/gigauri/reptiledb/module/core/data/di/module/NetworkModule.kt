@@ -46,7 +46,7 @@ object NetworkModule {
                 val language: String = runBlocking { dataStore.getLanguage().first() ?: "ka" }
                 val original: Request = chain.request()
                 val requestBuilder: Request.Builder =
-                    original.newBuilder().url(chain.request().url())
+                    original.newBuilder().url(chain.request().url)
                 requestBuilder.addHeader("Accept-Language", language)
                 val request: Request = requestBuilder.build()
                 chain.proceed(request)

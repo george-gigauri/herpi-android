@@ -29,116 +29,107 @@ import com.gigauri.reptiledb.module.core.presentation.components.text.PrimaryTex
 import com.gigauri.reptiledb.module.core.presentation.components.text.SecondaryTextLighterDark
 import com.gigauri.reptiledb.module.feature.reptileDetails.domain.model.Distribution
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.R
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.JointType
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
-import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Polygon
-import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun ExpandedMapDialog(
     areas: List<Distribution>,
     onCancel: () -> Unit
 ) {
-
-    val cameraPositionState = rememberCameraPositionState()
-
-    LaunchedEffect(key1 = Unit, block = {
-        cameraPositionState.move(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(41.817667, 44.003333),
-                5.7f
-            )
-        )
-    })
-
-    Dialog(
-        onDismissRequest = { onCancel() },
-        properties = DialogProperties(
-            dismissOnBackPress = true,
-            dismissOnClickOutside = false,
-            usePlatformDefaultWidth = false,
-            decorFitsSystemWindows = false
-        ),
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(HerpiColors.White)
-        ) {
-
-            // Map
-            GoogleMap(
-                cameraPositionState = cameraPositionState,
-                properties = MapProperties(
-                    mapType = MapType.TERRAIN,
-                ),
-                uiSettings = MapUiSettings(
-                    compassEnabled = true,
-                    myLocationButtonEnabled = true,
-                ),
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-
-                areas.map {
-                    if (it.coordinates.isNotEmpty()) {
-                        Polygon(
-                            points = it.coordinates.map { c -> LatLng(c.lat, c.lng) },
-                            fillColor = HerpiColors.DarkGreenMain.copy(alpha = 0.5f),
-                            strokeColor = HerpiColors.DarkGreenMain,
-                            strokeWidth = 12f,
-                            geodesic = true,
-                            strokeJointType = JointType.ROUND
-                        )
-                    }
-                }
-            }
-
-            // Header
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.TopStart)
-                    .background(HerpiColors.DarkGreenMain)
-                    .padding(vertical = 16.dp)
-                    .padding(start = 2.dp, end = 16.dp)
-            ) {
-                // Back Button
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = null,
-                    tint = HerpiColors.White,
-                    modifier = Modifier
-                        .size(54.dp)
-                        .clip(CircleShape)
-                        .clickable { onCancel() }
-                        .padding(12.dp)
-                )
-
-                // Title
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                ) {
-                    PrimaryTextDarkGray(
-                        text = stringResource(id = R.string.title_expanded_distribution),
-                        color = HerpiColors.White
-                    )
-                    VerticalMargin(size = 2.dp)
-                    SecondaryTextLighterDark(
-                        text = stringResource(id = R.string.subtitle_expanded_distribution),
-                        color = HerpiColors.White.copy(alpha = 0.7f)
-                    )
-                }
-                HorizontalMargin(size = 12.dp)
-            }
-        }
-    }
+//
+//    val cameraPositionState = rememberCameraPositionState()
+//
+//    LaunchedEffect(key1 = Unit, block = {
+//        cameraPositionState.move(
+//            CameraUpdateFactory.newLatLngZoom(
+//                LatLng(41.817667, 44.003333),
+//                5.7f
+//            )
+//        )
+//    })
+//
+//    Dialog(
+//        onDismissRequest = { onCancel() },
+//        properties = DialogProperties(
+//            dismissOnBackPress = true,
+//            dismissOnClickOutside = false,
+//            usePlatformDefaultWidth = false,
+//            decorFitsSystemWindows = false
+//        ),
+//    ) {
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight()
+//                .background(HerpiColors.White)
+//        ) {
+//
+//            // Map
+//            GoogleMap(
+//                cameraPositionState = cameraPositionState,
+//                properties = MapProperties(
+//                    mapType = MapType.TERRAIN,
+//                ),
+//                uiSettings = MapUiSettings(
+//                    compassEnabled = true,
+//                    myLocationButtonEnabled = true,
+//                ),
+//                modifier = Modifier
+//                    .fillMaxSize()
+//            ) {
+//
+//                areas.map {
+//                    if (it.coordinates.isNotEmpty()) {
+//                        Polygon(
+//                            points = it.coordinates.map { c -> LatLng(c.lat, c.lng) },
+//                            fillColor = HerpiColors.DarkGreenMain.copy(alpha = 0.5f),
+//                            strokeColor = HerpiColors.DarkGreenMain,
+//                            strokeWidth = 12f,
+//                            geodesic = true,
+//                            strokeJointType = JointType.ROUND
+//                        )
+//                    }
+//                }
+//            }
+//
+//            // Header
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .align(Alignment.TopStart)
+//                    .background(HerpiColors.DarkGreenMain)
+//                    .padding(vertical = 16.dp)
+//                    .padding(start = 2.dp, end = 16.dp)
+//            ) {
+//                // Back Button
+//                Icon(
+//                    painter = painterResource(id = R.drawable.ic_arrow_back),
+//                    contentDescription = null,
+//                    tint = HerpiColors.White,
+//                    modifier = Modifier
+//                        .size(54.dp)
+//                        .clip(CircleShape)
+//                        .clickable { onCancel() }
+//                        .padding(12.dp)
+//                )
+//
+//                // Title
+//                Column(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .weight(1f)
+//                ) {
+//                    PrimaryTextDarkGray(
+//                        text = stringResource(id = R.string.title_expanded_distribution),
+//                        color = HerpiColors.White
+//                    )
+//                    VerticalMargin(size = 2.dp)
+//                    SecondaryTextLighterDark(
+//                        text = stringResource(id = R.string.subtitle_expanded_distribution),
+//                        color = HerpiColors.White.copy(alpha = 0.7f)
+//                    )
+//                }
+//                HorizontalMargin(size = 12.dp)
+//            }
+//        }
+//    }
 }

@@ -26,7 +26,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import android.content.Intent
 import android.net.Uri
+import android.preference.PreferenceManager
 import android.util.Log
+import org.osmdroid.config.Configuration
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -46,6 +48,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         runBlocking { viewModel.language.firstOrNull()?.let(::loadLocate) }
         initInAppUpdate()
+
+        Configuration.getInstance()
+            .load(this, PreferenceManager.getDefaultSharedPreferences(this))
+        Configuration.getInstance().userAgentValue = "ge.herpi"
+
         setContent {
             HerpiDefaultTheme {
                 MainScreen(intent, viewModel)
