@@ -84,6 +84,7 @@ dependencies {
 
     implementation(project(path = ":common"))
     implementation(project(path = ":core:data"))
+    implementation(project(path = ":core:domain"))
     implementation(project(path = ":feature:home:data"))
     implementation(project(path = ":feature:reptileDetails:data"))
     implementation(project(path = ":feature:reptileDetails:presentation"))
