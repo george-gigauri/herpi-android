@@ -2,30 +2,37 @@ package com.gigauri.reptiledb.module.feature.home.dialog
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.gigauri.reptiledb.module.core.presentation.HerpiColors
@@ -34,25 +41,26 @@ import com.gigauri.reptiledb.module.core.presentation.components.VerticalMargin
 import com.gigauri.reptiledb.module.core.presentation.components.text.PrimaryTextDarkGray
 import com.gigauri.reptiledb.module.core.presentation.components.text.SecondaryTextLighterDark
 import com.gigauri.reptiledb.module.feature.home.R
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
-import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.rememberMarkerState
+import org.osmdroid.api.IMapController
+import org.osmdroid.events.MapEventsReceiver
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.gestures.OneFingerZoomOverlay
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PickLocationManuallySheet(
-    onPick: (LatLng) -> Unit,
+    onPick: (GeoPoint) -> Unit,
     onCancel: () -> Unit
 ) {
 
-    val context = LocalContext.current
-    val cameraPositionState = rememberCameraPositionState()
-    var markerLatLng: LatLng? by rememberSaveable { mutableStateOf(null) }
-    var locationString by rememberSaveable { mutableStateOf("---") }
+    val density = LocalDensity.current
+    var center: GeoPoint by remember { mutableStateOf(GeoPoint(41.817667, 44.003333)) }
+    var markerLatLng: GeoPoint? by rememberSaveable { mutableStateOf(null) }
+
+    var mapController: IMapController? = remember { null }
 
     Dialog(
         onDismissRequest = { onCancel() },
@@ -65,11 +73,14 @@ fun PickLocationManuallySheet(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .clip(RoundedCornerShape(24.dp))
                 .background(HerpiColors.White)
                 .padding(horizontal = 16.dp)
-                .padding(top = 20.dp, bottom = 16.dp)
+                .padding(
+                    top = 20.dp,
+                    bottom = WindowInsets.systemBars.getBottom(density).dp + 85.dp
+                )
         ) {
 
             // Header
@@ -107,41 +118,45 @@ fun PickLocationManuallySheet(
             VerticalMargin(size = 12.dp)
 
             // Map
-            GoogleMap(
-                cameraPositionState = cameraPositionState,
-                properties = MapProperties(
-                    mapType = MapType.TERRAIN,
-                ),
-                uiSettings = MapUiSettings(
-                    compassEnabled = true,
-                    myLocationButtonEnabled = true,
-                ),
-                onMapClick = { latLng ->
-                    markerLatLng = latLng
-                },
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight()
                     .weight(1f)
-                    .clip(RoundedCornerShape(24.dp))
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White)
             ) {
+                AndroidView(
+                    update = { mapView ->
+                        mapView.overlays.clear()
+                        mapView.overlays.add(MapEventsOverlay(object : MapEventsReceiver {
+                            override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+                                markerLatLng = p
+                                return true
+                            }
 
-                markerLatLng?.let {
-                    Marker(
-                        state = rememberMarkerState().apply {
-                            position = it
+                            override fun longPressHelper(p: GeoPoint?): Boolean = false
+                        }))
+
+                        markerLatLng?.let {
+                            mapView.overlays.add(Marker(mapView).apply {
+                                position = it
+                            })
                         }
-                    )
-                }
+                    },
+                    factory = {
+                        org.osmdroid.views.MapView(it).apply {
+                            setTileSource(TileSourceFactory.MAPNIK)
+                            setMultiTouchControls(true)
+                            mapController = controller
+                            mapController?.setZoom(8.5)
+                            mapController?.animateTo(center)
+                            overlays.add(OneFingerZoomOverlay())
+                        }
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
-            // Display Picked Location
-            VerticalMargin(size = 16.dp)
-            PrimaryTextDarkGray(
-                text = locationString,
-                maxLines = 2,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
             VerticalMargin(size = 16.dp)
 
             // Buttons

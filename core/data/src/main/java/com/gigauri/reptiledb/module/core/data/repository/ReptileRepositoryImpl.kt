@@ -6,6 +6,7 @@ import com.gigauri.reptiledb.module.core.data.mapper.toDomain
 import com.gigauri.reptiledb.module.core.data.mapper.toEntity
 import com.gigauri.reptiledb.module.core.data.remote.api.ReptileAPI
 import com.gigauri.reptiledb.module.core.domain.common.Resource
+import com.gigauri.reptiledb.module.core.domain.model.NearbyList
 import com.gigauri.reptiledb.module.core.domain.model.Reptile
 import com.gigauri.reptiledb.module.core.domain.repository.ReptileRepository
 import javax.inject.Inject
@@ -19,8 +20,8 @@ class ReptileRepositoryImpl @Inject constructor(
         lat: Double,
         lng: Double,
         type: String?
-    ): Resource<List<Reptile>> {
-        return safeApiCall { api.getNearby(lat, lng, type = type).map { it.toDomain() } }
+    ): Resource<NearbyList> {
+        return safeApiCall { api.getNearby(lat, lng, type = type).toDomain() }
     }
 
     override suspend fun getAllReptiles(

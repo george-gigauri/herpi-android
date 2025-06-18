@@ -84,6 +84,7 @@ dependencies {
 
     implementation(project(path = ":common"))
     implementation(project(path = ":core:data"))
+    implementation(project(path = ":core:domain"))
     implementation(project(path = ":feature:home:data"))
     implementation(project(path = ":feature:reptileDetails:data"))
     implementation(project(path = ":feature:reptileDetails:presentation"))
@@ -95,18 +96,18 @@ dependencies {
 
     workManager()
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
 
     // facebook
-    implementation("com.facebook.android:facebook-android-sdk:15.0.2")
-    implementation("com.facebook.android:audience-network-sdk:6.14.0")
+    implementation("com.facebook.android:facebook-android-sdk:18.0.3")
+    implementation("com.facebook.android:audience-network-sdk:6.20.0")
 
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
 
     // Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.50")
-    ksp("com.google.dagger:hilt-compiler:2.50")
+    implementation("com.google.dagger:hilt-android:2.56")
+    ksp("com.google.dagger:hilt-compiler:2.56")
 }

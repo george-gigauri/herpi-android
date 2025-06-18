@@ -36,9 +36,8 @@ fun SearchBox(
             .then(modifier)
             .clip(RoundedCornerShape(100))
             .clickable { onClick() }
-            .shadow(16.dp)
-            .background(HerpiColors.White)
-            .padding(vertical = 0.dp)
+            .background(HerpiColors.LightGray.copy(alpha = 0.15f))
+            .padding(vertical = 4.dp)
     ) {
 
         HorizontalMargin(size = 2.dp)

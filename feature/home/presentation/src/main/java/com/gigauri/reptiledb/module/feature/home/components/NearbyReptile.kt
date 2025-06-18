@@ -48,7 +48,7 @@ fun NearbyReptile(
             .heightIn(max = 250.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
-            .padding(horizontal = 12.dp, vertical = 4.dp)
+            .padding(horizontal = 18.dp, vertical = 4.dp)
     ) {
         Box {
             AsyncImage(

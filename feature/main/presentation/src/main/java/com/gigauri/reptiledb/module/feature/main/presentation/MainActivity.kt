@@ -1,5 +1,6 @@
 package com.gigauri.reptiledb.module.feature.main.presentation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,7 +27,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import android.content.Intent
 import android.net.Uri
+import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
+import com.gigauri.reptiledb.module.common.extensions.wrapLocale
+import com.gigauri.reptiledb.module.core.domain.common.LocaleManager
+import com.gigauri.reptiledb.module.core.domain.usecase.app.GetAppLanguage
+import org.osmdroid.config.Configuration
+import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -44,8 +53,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        runBlocking { viewModel.language.firstOrNull()?.let(::loadLocate) }
         initInAppUpdate()
+
+        Configuration.getInstance()
+            .load(this, PreferenceManager.getDefaultSharedPreferences(this))
+        Configuration.getInstance().userAgentValue = "ge.herpi"
+
         setContent {
             HerpiDefaultTheme {
                 MainScreen(intent, viewModel)
@@ -92,6 +105,11 @@ class MainActivity : ComponentActivity() {
             this,
             AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build()
         )
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val context = newBase.wrapLocale(Locale(LocaleManager.currentLang))
+        super.attachBaseContext(context)
     }
 
     override fun onStart() {

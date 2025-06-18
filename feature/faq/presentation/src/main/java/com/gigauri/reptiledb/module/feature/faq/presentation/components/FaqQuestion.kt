@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,13 +45,8 @@ fun FaqQuestion(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            ///    .height(animateContentHeight)
             .then(modifier)
-            .clip(RoundedCornerShape(12.dp))
-            .shadow(
-                elevation = 12.dp,
-                shape = RoundedCornerShape(12.dp)
-            )
+            .clip(RoundedCornerShape(16.dp))
             .background(
                 if (isExpanded) {
                     HerpiColors.DarkGreenMain
@@ -58,6 +54,7 @@ fun FaqQuestion(
                     HerpiColors.White
                 }
             )
+            .border(1.dp, HerpiColors.LightGray.copy(alpha = 0.5f), RoundedCornerShape(16.dp))
             .clickable { onClick() }
             .padding(16.dp)
     ) {

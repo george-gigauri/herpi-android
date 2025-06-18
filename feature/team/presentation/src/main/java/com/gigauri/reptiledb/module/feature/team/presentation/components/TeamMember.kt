@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -62,7 +63,7 @@ fun TeamMember(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .clickable { onClick() }
             .background(HerpiColors.White)
             .border(
@@ -70,7 +71,7 @@ fun TeamMember(
                     animateBorderWidth,
                     HerpiColors.DarkGreenMain
                 ),
-                RoundedCornerShape(12.dp)
+                RoundedCornerShape(16.dp)
             )
             .padding(16.dp)
     ) {
@@ -84,7 +85,7 @@ fun TeamMember(
                 model = data.avatar,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(65.dp)
                     .clip(CircleShape)
             )
 
@@ -101,19 +102,23 @@ fun TeamMember(
                 // Full Name
                 PrimaryTextDarkGray(
                     text = "${data.firstName} ${data.lastName}",
+                    size = 15.sp,
+                    weight = FontWeight.Bold
                 )
                 VerticalMargin(size = 4.dp)
                 // Email
                 PrimaryTextDarkGray(
                     text = data.email,
-                    size = 13.sp,
+                    size = 12.sp,
                     color = HerpiColors.DarkGreenMain,
                     modifier = Modifier.clickable { onEmailClick() }
                 )
-                VerticalMargin(size = 6.dp)
+                VerticalMargin(size = 8.dp)
                 // Role
                 SecondaryTextLighterDark(
-                    text = data.role
+                    text = data.role,
+                    size = 14.sp,
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 1
                 )
             }
 

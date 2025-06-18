@@ -18,12 +18,12 @@ fun NearbySpeciesTitle() {
     Column {
         PrimaryTextDarkGray(
             text = stringResource(id = R.string.title_nearby_species),
-            modifier = Modifier.padding(horizontal = 24.dp)
+            modifier = Modifier.padding(horizontal = 32.dp)
         )
         VerticalMargin(size = 4.dp)
         SecondaryTextLighterDark(
             text = stringResource(id = R.string.subtitle_nearby_species),
-            modifier = Modifier.padding(horizontal = 24.dp)
+            modifier = Modifier.padding(horizontal = 32.dp)
         )
     }
 }

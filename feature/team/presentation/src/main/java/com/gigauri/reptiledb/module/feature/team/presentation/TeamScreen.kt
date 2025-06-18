@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,6 +47,7 @@ fun TeamScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(HerpiColors.DarkGreenMain)
+            .statusBarsPadding()
     ) {
         TopBar(
             onDrawerClick = onDrawerClick,
@@ -66,43 +69,58 @@ fun TeamScreen(
                 PrimaryTextDarkGray(text = stringResource(id = R.string.title_team))
             }
 
+            item {
+                VerticalMargin(24.dp)
+            }
+
             // Person List
             item { VerticalMargin(size = 8.dp) }
             items(state.data) {
-                TeamMember(
-                    context = context,
-                    data = it,
-                    isExpanded = it.id == state.expandedItemId,
-                    onEmailClick = {
-                        Intent(Intent.ACTION_SENDTO).apply {
-                            data = "mailto:${it.email}".toUri()
-                            putExtra(Intent.EXTRA_EMAIL, it.email)
-                        }.let { intent ->
-                            context.startActivity(intent)
-                        }
+                Column {
+                    PrimaryTextDarkGray(
+                        text = it.category,
+                        color = HerpiColors.DarkGreenMain,
+                        weight = FontWeight.Bold
+                    )
+                    VerticalMargin(size = 12.dp)
 
-                        viewModel.analytics.logEvent(
-                            Const.Event.CLICK_TEAM_EMAIL, mapOf("member" to it.email)
-                        )
-                    },
-                    onClick = {
-                        viewModel.onEvent(TeamUiEvent.Expand(it.id))
-                    },
-                    onSocialClick = { social ->
-                        (context as? Activity)?.let { activity ->
-                            IntentUtil.openUrlToBrowserPopup(
-                                activity,
-                                social.profileUrl
-                            )
-                        }
+                    it.data.map { member ->
+                        TeamMember(
+                            context = context,
+                            data = member,
+                            isExpanded = member.id == state.expandedItemId,
+                            onEmailClick = {
+                                Intent(Intent.ACTION_SENDTO).apply {
+                                    data = "mailto:${member.email}".toUri()
+                                    putExtra(Intent.EXTRA_EMAIL, member.email)
+                                }.let { intent ->
+                                    context.startActivity(intent)
+                                }
 
-                        viewModel.analytics.logEvent(
-                            Const.Event.CLICK_TEAM_SOCIAL,
-                            mapOf("member" to it.email, "network" to social.networkName)
+                                viewModel.analytics.logEvent(
+                                    Const.Event.CLICK_TEAM_EMAIL, mapOf("member" to member.email)
+                                )
+                            },
+                            onClick = {
+                                viewModel.onEvent(TeamUiEvent.Expand(member.id))
+                            },
+                            onSocialClick = { social ->
+                                (context as? Activity)?.let { activity ->
+                                    IntentUtil.openUrlToBrowserPopup(
+                                        activity,
+                                        social.profileUrl
+                                    )
+                                }
+
+                                viewModel.analytics.logEvent(
+                                    Const.Event.CLICK_TEAM_SOCIAL,
+                                    mapOf("member" to member.email, "network" to social.networkName)
+                                )
+                            },
+                            modifier = Modifier.padding(vertical = 8.dp)
                         )
-                    },
-                    modifier = Modifier.padding(vertical = 8.dp)
-                )
+                    }
+                }
             }
         }
     }

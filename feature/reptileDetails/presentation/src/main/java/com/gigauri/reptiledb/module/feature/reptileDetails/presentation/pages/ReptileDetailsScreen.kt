@@ -52,6 +52,9 @@ import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.dialog.E
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.event.ReptileDetailsEvent
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.viewModels.ReptileDetailsViewModel
 import ge.herpi.imageviewer.FullScreenImageViewer
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun ReptileDetailsScreen(
@@ -84,13 +87,13 @@ fun ReptileDetailsScreen(
             // Thumbnail
             ReptileThumbnail(
                 imageUrl = state.data?.thumbnailUrl,
-                modifier = Modifier.height(325.dp)
+                modifier = Modifier.height(375.dp)
             )
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 250.dp)
+                    .padding(top = 275.dp)
             ) {
                 // Basic Info card
                 state.data?.let {
@@ -148,7 +151,6 @@ fun ReptileDetailsScreen(
                     text = stringResource(id = R.string.title_coverage_areas),
                     modifier = Modifier.padding(horizontal = 24.dp)
                 )
-                VerticalMargin(size = 12.dp)
                 /* MAP */
                 DistributionCard(
                     data = state.distribution,
@@ -163,32 +165,32 @@ fun ReptileDetailsScreen(
                 )
                 VerticalMargin(size = 8.dp)
                 // Map Button
-                Text(
-                    text = stringResource(id = R.string.btn_expand_map),
-                    color = HerpiColors.White,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    style = TextStyle(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        )
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(HerpiColors.DarkGreenMain)
-                        .clickable {
-                            isMapExpanded = true
-                            viewModel.analytics.logEvent(
-                                Const.Event.EXPAND_DISTRIBUTION_MAP,
-                                mapOf("specie_id" to state.data?.id)
-                            )
-                        }
-                        .padding(vertical = 16.dp)
-                )
-                VerticalMargin(size = 24.dp)
+//                Text(
+//                    text = stringResource(id = R.string.btn_expand_map),
+//                    color = HerpiColors.White,
+//                    fontSize = 15.sp,
+//                    textAlign = TextAlign.Center,
+//                    fontWeight = FontWeight.SemiBold,
+//                    style = TextStyle(
+//                        platformStyle = PlatformTextStyle(
+//                            includeFontPadding = false
+//                        )
+//                    ),
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(horizontal = 24.dp)
+//                        .clip(RoundedCornerShape(12.dp))
+//                        .background(HerpiColors.DarkGreenMain)
+//                        .clickable {
+//                            isMapExpanded = true
+//                            viewModel.analytics.logEvent(
+//                                Const.Event.EXPAND_DISTRIBUTION_MAP,
+//                                mapOf("specie_id" to state.data?.id)
+//                            )
+//                        }
+//                        .padding(vertical = 16.dp)
+//                )
+                VerticalMargin(size = 56.dp)
             }
 
             // Top Bar Controls
@@ -196,7 +198,9 @@ fun ReptileDetailsScreen(
                 onBack = { onBackClick() },
                 onShare = {
                     IntentUtil.shareUrl(
-                        "${Const.HERPI_URL}/reptiles/${state.data?.id}/details",
+                        "https://herpi.ge/${
+                            runBlocking { viewModel.appLanguage.firstOrNull() } ?: "ka"
+                        }/view/${state.data?.id}/",
                         (context as Activity)
                     )
                     viewModel.analytics.logEvent(

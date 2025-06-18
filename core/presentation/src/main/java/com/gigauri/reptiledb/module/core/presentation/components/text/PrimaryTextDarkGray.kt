@@ -20,12 +20,13 @@ fun PrimaryTextDarkGray(
     size: TextUnit = 16.sp,
     maxLines: Int = 2,
     color: Color = HerpiColors.DarkGray,
-    alignment: TextAlign = TextAlign.Start
+    alignment: TextAlign = TextAlign.Start,
+    weight: FontWeight = FontWeight.SemiBold
 ) {
     Text(
         text = text,
         fontSize = size,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = weight,
         color = color,
         textAlign = alignment,
         style = TextStyle(

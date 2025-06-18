@@ -1,6 +1,7 @@
 package com.gigauri.reptiledb.module.feature.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,8 +48,9 @@ fun Reptile(
             .height(IntrinsicSize.Min)
             .clickable { onClick() }
             .padding(horizontal = 24.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .background(HerpiColors.White)
+            .border(1.dp, HerpiColors.LightGray.copy(alpha = 0.5f), RoundedCornerShape(16.dp))
     ) {
         // Basic Info
         Column(

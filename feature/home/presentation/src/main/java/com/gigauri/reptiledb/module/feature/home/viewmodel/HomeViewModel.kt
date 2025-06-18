@@ -91,7 +91,12 @@ class HomeViewModel @Inject constructor(
                 )
             ) {
                 is Resource.Success -> {
-                    _state.update { it.copy(nearbyReptiles = nearbyReptiles.data) }
+                    _state.update {
+                        it.copy(
+                            region = nearbyReptiles.data.location,
+                            nearbyReptiles = nearbyReptiles.data.data
+                        )
+                    }
                 }
 
                 is Resource.Error -> {

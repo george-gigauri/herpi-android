@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,8 @@ fun TopBar(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(vertical = 16.dp)
+            .statusBarsPadding()
+            .padding(bottom = 20.dp)
     ) {
 
         // Drawer Burger Icon
@@ -51,7 +53,7 @@ fun TopBar(
             contentDescription = null,
             tint = HerpiColors.White,
             modifier = Modifier
-                .size(54.dp)
+                .size(56.dp)
                 .clip(CircleShape)
                 .clickable { onDrawerClick() }
                 .padding(15.dp)
@@ -82,15 +84,16 @@ fun TopBar(
                         painter = painterResource(id = R.drawable.ic_location_tick),
                         contentDescription = null,
                         tint = HerpiColors.White,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(18.dp)
                     )
-                    HorizontalMargin(size = 8.dp)
+                    HorizontalMargin(size = 4.dp)
 
                     // Current Location
                     PrimaryTextDarkGray(
                         text = currentLocation
                             ?: stringResource(id = R.string.error_cant_retrieve_location),
                         color = HerpiColors.White,
+                        size = 15.sp,
                         maxLines = 1
                     )
                 }
@@ -111,7 +114,7 @@ fun TopBar(
             contentDescription = null,
             tint = HerpiColors.White,
             modifier = Modifier
-                .size(54.dp)
+                .size(56.dp)
                 .clip(CircleShape)
                 .clickable { onChatClick() }
                 .padding(12.dp)

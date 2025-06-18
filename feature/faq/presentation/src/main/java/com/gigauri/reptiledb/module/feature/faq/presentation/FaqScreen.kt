@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -48,6 +49,7 @@ fun FaqScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(HerpiColors.DarkGreenMain)
+            .statusBarsPadding()
     ) {
         TopBar(
             onDrawerClick = onDrawerClick,
@@ -56,13 +58,13 @@ fun FaqScreen(
 
         // White Container
         LazyColumn(
-            contentPadding = PaddingValues(24.dp),
+            contentPadding = PaddingValues(32.dp),
             state = lazyListState,
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                .background(HerpiColors.LightWindowBg)
+                .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
+                .background(HerpiColors.White)
         ) {
 
             // Title Team
@@ -71,7 +73,7 @@ fun FaqScreen(
             }
 
             // Person List
-            item { VerticalMargin(size = 8.dp) }
+            item { VerticalMargin(size = 12.dp) }
             items(state.data, key = { it.id }) {
                 FaqQuestion(
                     data = it,

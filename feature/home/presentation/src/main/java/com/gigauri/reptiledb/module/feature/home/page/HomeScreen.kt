@@ -179,16 +179,16 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .background(HerpiColors.LightWindowBg)
+                    .clip(RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp))
+                    .background(HerpiColors.White)
             ) {
                 // Search Box
                 if (isInternetAvailable) {
-                    item { VerticalMargin(size = 32.dp) }
+                    item { VerticalMargin(size = 36.dp) }
                     item {
                         SearchBox(
                             onClick = onSearchBoxClick,
-                            modifier = Modifier.padding(horizontal = 24.dp)
+                            modifier = Modifier.padding(horizontal = 32.dp)
                         )
                     }
                 }
@@ -199,7 +199,7 @@ fun HomeScreen(
                     Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState())
                     ) {
-                        HorizontalMargin(24.dp)
+                        HorizontalMargin(32.dp)
                         if (state.isCategoriesLoading) {
                             (0..8).map {
                                 CategoryShimmer()
@@ -216,7 +216,7 @@ fun HomeScreen(
                                 HorizontalMargin(12.dp)
                             }
                         }
-                        HorizontalMargin(8.dp)
+                        HorizontalMargin(20.dp)
                     }
                 }
 
@@ -233,7 +233,7 @@ fun HomeScreen(
                                 rows = GridCells.Fixed(
                                     if (state.nearbyReptiles.size in (1..2)) 1 else 2
                                 ),
-                                contentPadding = PaddingValues(horizontal = 8.dp),
+                                contentPadding = PaddingValues(horizontal = 12.dp),
                                 state = nearbyState,
                                 modifier = Modifier.height(
                                     if (state.nearbyReptiles.size in (1..2)) 200.dp else 350.dp
@@ -299,7 +299,7 @@ fun HomeScreen(
                 // All Species
                 item { VerticalMargin(size = 16.dp) }
                 item { AllSpeciesTitle() }
-                item { VerticalMargin(size = 12.dp) }
+                item { VerticalMargin(size = 16.dp) }
                 items(state.allReptiles) {
                     Reptile(
                         reptile = it,

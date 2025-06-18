@@ -1,26 +1,40 @@
 package com.gigauri.reptiledb.module.feature.reptileDetails.presentation.components
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.Rect
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.gigauri.reptiledb.module.core.presentation.HerpiColors
+import com.gigauri.reptiledb.module.core.presentation.R
 import com.gigauri.reptiledb.module.feature.reptileDetails.domain.model.Distribution
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.JointType
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapType
-import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Polygon
-import com.google.maps.android.compose.rememberCameraPositionState
+import org.osmdroid.api.IMapController
+import org.osmdroid.events.MapListener
+import org.osmdroid.events.ScrollEvent
+import org.osmdroid.events.ZoomEvent
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.TilesOverlay
+import org.osmdroid.views.overlay.gestures.OneFingerZoomOverlay
+import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
+import org.osmdroid.views.overlay.mylocation.DirectedLocationOverlay
 
 @Composable
 fun DistributionCard(
@@ -29,54 +43,41 @@ fun DistributionCard(
     modifier: Modifier = Modifier
 ) {
 
-    val cameraPositionState = rememberCameraPositionState()
+    var mapController: IMapController? = remember { null }
 
-    LaunchedEffect(key1 = Unit, block = {
-        cameraPositionState.move(
-            CameraUpdateFactory.newLatLngZoom(
-                LatLng(41.817667, 44.003333),
-                5.7f
-            )
-        )
-    })
+    AndroidView(
+        update = {
+            data.map { polygon ->
+                it.overlays.add(Polygon().apply {
+                    this.fillColor = HerpiColors.PinkRed.copy(alpha = 0.35f).toArgb()
+                    this.strokeColor = HerpiColors.PinkRed.toArgb()
 
-    GoogleMap(
-        uiSettings = MapUiSettings(
-            compassEnabled = false,
-            indoorLevelPickerEnabled = false,
-            mapToolbarEnabled = false,
-            myLocationButtonEnabled = false,
-            rotationGesturesEnabled = false,
-            scrollGesturesEnabled = false,
-            scrollGesturesEnabledDuringRotateOrZoom = false,
-            tiltGesturesEnabled = false,
-            zoomControlsEnabled = false,
-            zoomGesturesEnabled = false
-        ),
-        cameraPositionState = cameraPositionState,
-        properties = MapProperties(
-            mapType = MapType.TERRAIN,
-        ),
+                    polygon.coordinates.map { coordinates ->
+                        GeoPoint(coordinates.lat, coordinates.lng)
+                    }.forEach {
+                        this.addPoint(it)
+                    }
+                })
+            }
+        },
+        factory = {
+            org.osmdroid.views.MapView(it).apply {
+                this.setTileSource(TileSourceFactory.MAPNIK)
+                this.getLocalVisibleRect(Rect())
+                this.setMultiTouchControls(true)
+
+                mapController = this.controller
+                mapController?.animateTo(GeoPoint(41.817667, 44.003333))
+                mapController?.setZoom(7.75)
+
+                this.overlays.add(DirectedLocationOverlay(context))
+            }
+        },
         modifier = Modifier
-            .then(modifier)
+            .padding(20.dp)
             .fillMaxWidth()
-            .wrapContentHeight()
             .aspectRatio(1f)
             .clip(RoundedCornerShape(16.dp))
-            .clickable { onTouch() }
-    ) {
-
-        data.map {
-            if (it.coordinates.isNotEmpty()) {
-                Polygon(
-                    points = it.coordinates.map { c -> LatLng(c.lat, c.lng) },
-                    fillColor = HerpiColors.DarkGreenMain.copy(alpha = 0.5f),
-                    strokeColor = HerpiColors.DarkGreenMain,
-                    strokeWidth = 12f,
-                    geodesic = true,
-                    strokeJointType = JointType.ROUND
-                )
-            }
-        }
-    }
+            .then(modifier)
+    )
 }
