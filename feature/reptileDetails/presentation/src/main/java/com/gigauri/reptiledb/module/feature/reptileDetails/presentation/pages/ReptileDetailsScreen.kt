@@ -165,32 +165,32 @@ fun ReptileDetailsScreen(
                 )
                 VerticalMargin(size = 8.dp)
                 // Map Button
-                Text(
-                    text = stringResource(id = R.string.btn_expand_map),
-                    color = HerpiColors.White,
-                    fontSize = 15.sp,
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.SemiBold,
-                    style = TextStyle(
-                        platformStyle = PlatformTextStyle(
-                            includeFontPadding = false
-                        )
-                    ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 24.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(HerpiColors.DarkGreenMain)
-                        .clickable {
-                            isMapExpanded = true
-                            viewModel.analytics.logEvent(
-                                Const.Event.EXPAND_DISTRIBUTION_MAP,
-                                mapOf("specie_id" to state.data?.id)
-                            )
-                        }
-                        .padding(vertical = 16.dp)
-                )
-                VerticalMargin(size = 24.dp)
+//                Text(
+//                    text = stringResource(id = R.string.btn_expand_map),
+//                    color = HerpiColors.White,
+//                    fontSize = 15.sp,
+//                    textAlign = TextAlign.Center,
+//                    fontWeight = FontWeight.SemiBold,
+//                    style = TextStyle(
+//                        platformStyle = PlatformTextStyle(
+//                            includeFontPadding = false
+//                        )
+//                    ),
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(horizontal = 24.dp)
+//                        .clip(RoundedCornerShape(12.dp))
+//                        .background(HerpiColors.DarkGreenMain)
+//                        .clickable {
+//                            isMapExpanded = true
+//                            viewModel.analytics.logEvent(
+//                                Const.Event.EXPAND_DISTRIBUTION_MAP,
+//                                mapOf("specie_id" to state.data?.id)
+//                            )
+//                        }
+//                        .padding(vertical = 16.dp)
+//                )
+                VerticalMargin(size = 56.dp)
             }
 
             // Top Bar Controls
