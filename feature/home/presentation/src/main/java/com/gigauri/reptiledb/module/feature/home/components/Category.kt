@@ -1,6 +1,7 @@
 package com.gigauri.reptiledb.module.feature.home.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,7 +48,12 @@ fun Category(
         Box(
             modifier = Modifier
                 .size(90.dp, 95.dp)
-                .clip(RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(16.dp))
+                .border(
+                    1.dp,
+                    if (isSelected) HerpiColors.DarkGreenMain else HerpiColors.LightGray.copy(0.5f),
+                    RoundedCornerShape(16.dp)
+                )
                 .background(
                     if (isSelected) HerpiColors.DarkGreenMain
                     else HerpiColors.White
