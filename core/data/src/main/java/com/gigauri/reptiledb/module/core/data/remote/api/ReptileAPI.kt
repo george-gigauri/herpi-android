@@ -1,5 +1,6 @@
 package com.gigauri.reptiledb.module.core.data.remote.api
 
+import com.gigauri.reptiledb.module.core.data.remote.dto.NearbyListDto
 import com.gigauri.reptiledb.module.core.data.remote.dto.ReptileDto
 import retrofit2.http.*
 
@@ -14,10 +15,10 @@ interface ReptileAPI {
         @Query("endemic") isEndemic: Boolean? = null
     ): List<ReptileDto>
 
-    @GET("api/v1/reptiles/nearby")
+    @GET("api/v2/reptiles/nearby")
     suspend fun getNearby(
         @Query("lat") lat: Double,
         @Query("lng") lng: Double,
         @Query("type") type: String? = null,
-    ): List<ReptileDto>
+    ): NearbyListDto
 }

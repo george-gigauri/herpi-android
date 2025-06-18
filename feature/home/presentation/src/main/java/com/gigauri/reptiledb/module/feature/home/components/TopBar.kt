@@ -86,7 +86,7 @@ fun TopBar(
                         tint = HerpiColors.White,
                         modifier = Modifier.size(18.dp)
                     )
-                    HorizontalMargin(size = 8.dp)
+                    HorizontalMargin(size = 4.dp)
 
                     // Current Location
                     PrimaryTextDarkGray(

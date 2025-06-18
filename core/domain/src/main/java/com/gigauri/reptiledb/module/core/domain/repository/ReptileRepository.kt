@@ -1,6 +1,7 @@
 package com.gigauri.reptiledb.module.core.domain.repository
 
 import com.gigauri.reptiledb.module.core.domain.common.Resource
+import com.gigauri.reptiledb.module.core.domain.model.NearbyList
 import com.gigauri.reptiledb.module.core.domain.model.Reptile
 
 interface ReptileRepository {
@@ -8,7 +9,7 @@ interface ReptileRepository {
         lat: Double,
         lng: Double,
         type: String?
-    ): Resource<List<Reptile>>
+    ): Resource<NearbyList>
 
     suspend fun getAllReptiles(
         page: Int = 0,
