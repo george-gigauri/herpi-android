@@ -1,19 +1,18 @@
 package com.gigauri.reptiledb.module.feature.home.dialog
 
-import android.content.Intent
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
-import android.graphics.Rect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsIgnoringVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,8 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,26 +42,23 @@ import com.gigauri.reptiledb.module.core.presentation.components.text.PrimaryTex
 import com.gigauri.reptiledb.module.core.presentation.components.text.SecondaryTextLighterDark
 import com.gigauri.reptiledb.module.feature.home.R
 import org.osmdroid.api.IMapController
-import org.osmdroid.events.MapListener
-import org.osmdroid.events.ScrollEvent
-import org.osmdroid.events.ZoomEvent
+import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.overlay.TilesOverlay
+import org.osmdroid.views.overlay.MapEventsOverlay
+import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.gestures.OneFingerZoomOverlay
-import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
-import org.osmdroid.views.overlay.mylocation.DirectedLocationOverlay
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PickLocationManuallySheet(
     onPick: (GeoPoint) -> Unit,
     onCancel: () -> Unit
 ) {
 
-    val context = LocalContext.current
-    var center: GeoPoint by remember { mutableStateOf(GeoPoint(1.0, 1.0)) }
+    val density = LocalDensity.current
+    var center: GeoPoint by remember { mutableStateOf(GeoPoint(41.817667, 44.003333)) }
     var markerLatLng: GeoPoint? by rememberSaveable { mutableStateOf(null) }
-    var locationString by rememberSaveable { mutableStateOf(".") }
 
     var mapController: IMapController? = remember { null }
 
@@ -78,11 +73,14 @@ fun PickLocationManuallySheet(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .clip(RoundedCornerShape(24.dp))
                 .background(HerpiColors.White)
                 .padding(horizontal = 16.dp)
-                .padding(top = 20.dp, bottom = 16.dp)
+                .padding(
+                    top = 20.dp,
+                    bottom = WindowInsets.systemBars.getBottom(density).dp + 85.dp
+                )
         ) {
 
             // Header
@@ -120,55 +118,45 @@ fun PickLocationManuallySheet(
             VerticalMargin(size = 12.dp)
 
             // Map
-            Box(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.White)
+            ) {
                 AndroidView(
-                    update = {
+                    update = { mapView ->
+                        mapView.overlays.clear()
+                        mapView.overlays.add(MapEventsOverlay(object : MapEventsReceiver {
+                            override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
+                                markerLatLng = p
+                                return true
+                            }
 
+                            override fun longPressHelper(p: GeoPoint?): Boolean = false
+                        }))
+
+                        markerLatLng?.let {
+                            mapView.overlays.add(Marker(mapView).apply {
+                                position = it
+                            })
+                        }
                     },
                     factory = {
                         org.osmdroid.views.MapView(it).apply {
-                            this.setTileSource(TileSourceFactory.MAPNIK)
-                            this.getLocalVisibleRect(Rect())
-                            this.setMultiTouchControls(true)
-
-
-                            // Adjust the alpha of the TilesOverlay to dim the map
-                            val tilesOverlay: TilesOverlay = overlayManager.tilesOverlay
-                            tilesOverlay.setColorFilter(
-                                PorterDuffColorFilter(
-                                    Color(0x1A000000).toArgb(),
-                                    PorterDuff.Mode.DARKEN
-                                )
-                            )
-
-                            mapController = this.controller
+                            setTileSource(TileSourceFactory.MAPNIK)
+                            setMultiTouchControls(true)
+                            mapController = controller
+                            mapController?.setZoom(8.5)
                             mapController?.animateTo(center)
-                            mapController?.setZoom(5.5)
-
-                            this.overlays.add(OneFingerZoomOverlay())
-                            this.overlays.add(RotationGestureOverlay(this))
-                            this.overlays.add(DirectedLocationOverlay(context))
-
-                            this.addMapListener(object : MapListener {
-                                override fun onScroll(event: ScrollEvent?): Boolean {
-                                    return true
-                                }
-
-                                override fun onZoom(event: ZoomEvent?): Boolean {
-                                    return true
-                                }
-                            })
+                            overlays.add(OneFingerZoomOverlay())
                         }
-                    })
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
             }
 
-            // Display Picked Location
-            VerticalMargin(size = 16.dp)
-            PrimaryTextDarkGray(
-                text = locationString,
-                maxLines = 2,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
             VerticalMargin(size = 16.dp)
 
             // Buttons
