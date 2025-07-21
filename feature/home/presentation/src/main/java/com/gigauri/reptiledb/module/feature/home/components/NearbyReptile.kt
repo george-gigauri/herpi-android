@@ -45,7 +45,7 @@ fun NearbyReptile(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .width(190.dp)
-            .heightIn(max = 250.dp)
+            .heightIn(max = 275.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .padding(horizontal = 18.dp, vertical = 4.dp)

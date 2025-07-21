@@ -179,16 +179,16 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .clip(RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp))
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .background(HerpiColors.White)
             ) {
                 // Search Box
                 if (isInternetAvailable) {
-                    item { VerticalMargin(size = 36.dp) }
+                    item { VerticalMargin(size = 24.dp) }
                     item {
                         SearchBox(
                             onClick = onSearchBoxClick,
-                            modifier = Modifier.padding(horizontal = 32.dp)
+                            modifier = Modifier.padding(horizontal = 24.dp)
                         )
                     }
                 }
@@ -199,7 +199,7 @@ fun HomeScreen(
                     Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState())
                     ) {
-                        HorizontalMargin(32.dp)
+                        HorizontalMargin(22.dp)
                         if (state.isCategoriesLoading) {
                             (0..8).map {
                                 CategoryShimmer()
