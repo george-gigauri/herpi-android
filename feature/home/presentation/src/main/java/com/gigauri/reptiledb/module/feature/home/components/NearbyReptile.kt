@@ -44,11 +44,11 @@ fun NearbyReptile(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .width(190.dp)
-            .heightIn(max = 275.dp)
+            .width(225.dp)
+            .heightIn(max = 325.dp)
             .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
-            .padding(horizontal = 18.dp, vertical = 4.dp)
+            .padding(horizontal = 16.dp, vertical = 4.dp)
     ) {
         Box {
             AsyncImage(
@@ -59,7 +59,7 @@ fun NearbyReptile(
                     isLoading = it is AsyncImagePainter.State.Loading
                 },
                 modifier = Modifier
-                    .size(180.dp, 96.dp)
+                    .size(215.dp, 131.dp)
                     .clip(RoundedCornerShape(12.dp))
                     .background(HerpiColors.DarkGreenMain)
             )
