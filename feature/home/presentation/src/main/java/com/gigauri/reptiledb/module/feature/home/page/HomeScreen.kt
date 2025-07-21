@@ -225,76 +225,32 @@ fun HomeScreen(
                     item { VerticalMargin(size = 28.dp) }
                     item { NearbySpeciesTitle() }
                     item { VerticalMargin(size = 2.dp) }
-                    item {
-                        if (state.nearbyReptiles.isEmpty() && !state.isNearbyLoading) {
-                            NearbySpeciesNotFound()
+                    if (state.nearbyReptiles.isEmpty() && !state.isNearbyLoading) {
+                        item { NearbySpeciesNotFound() }
+                    } else {
+                        if (state.isNearbyLoading) {
+                            items(10) {
+                                NearbySpeciesShimmer()
+                            }
                         } else {
-                            LazyHorizontalGrid(
-                                rows = GridCells.Fixed(
-                                    if (state.nearbyReptiles.size in (1..2)) 1 else 2
-                                ),
-                                contentPadding = PaddingValues(horizontal = 12.dp),
-                                state = nearbyState,
-                                modifier = Modifier.height(
-                                    if (state.nearbyReptiles.size in (1..2)) 200.dp else 350.dp
-                                )
-                            ) {
-
-                                if (state.isNearbyLoading) {
-                                    items(10) {
-                                        NearbySpeciesShimmer()
-                                    }
-                                } else {
-                                    items(state.nearbyReptiles) {
-                                        NearbyReptile(
-                                            it,
-                                            onClick = {
-                                                openReptileDetail(it)
-                                                viewModel.analytics.logEvent(
-                                                    Const.Event.OPEN_NEARBY_SPECIE_DETAILS,
-                                                    mapOf("specie_id" to it.id)
-                                                )
-                                            }
+                            item { VerticalMargin(size = 12.dp) }
+                            items(state.nearbyReptiles) {
+                                Reptile(
+                                    it,
+                                    onClick = {
+                                        openReptileDetail(it)
+                                        viewModel.analytics.logEvent(
+                                            Const.Event.OPEN_NEARBY_SPECIE_DETAILS,
+                                            mapOf("specie_id" to it.id)
                                         )
                                     }
-                                }
+                                )
+                                VerticalMargin(size = 12.dp)
                             }
                         }
                     }
                 }
                 item { VerticalMargin(size = 12.dp) }
-                item {
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 32.dp)
-                    ) {
-                        val pageCount = if (state.nearbyReptiles.isNotEmpty()) {
-                            (state.nearbyReptiles.size + 4 - 1) / 4
-                        } else 0
-
-                        for (i in 0 until pageCount) {
-                            if (i == 0) {
-                                Spacer(
-                                    modifier = Modifier
-                                        .width(16.dp)
-                                        .height(8.dp)
-                                        .clip(CircleShape)
-                                        .background(HerpiColors.DarkGreenMain)
-                                )
-                            } else {
-                                Spacer(
-                                    modifier = Modifier
-                                        .size(8.dp)
-                                        .clip(CircleShape)
-                                        .background(HerpiColors.DarkGreenMain.copy(alpha = 0.5f))
-                                )
-                            }
-                            HorizontalMargin(size = 4.dp)
-                        }
-                    }
-                }
 
                 // All Species
                 item { VerticalMargin(size = 16.dp) }

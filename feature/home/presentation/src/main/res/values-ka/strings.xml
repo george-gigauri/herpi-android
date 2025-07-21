@@ -4,7 +4,7 @@
     <string name="hint_search_here">ძიება…</string>
     <string name="error_cant_retrieve_location">რეგიონის არჩევა</string>
     <string name="title_nearby_species">შენს არეალში</string>
-    <string name="subtitle_nearby_species">სახეობები, რომლებსაც შენს არეალში შეიძლება გადააწყდე</string>
+    <string name="subtitle_nearby_species">სახეობები, რომელიც შენს ტერიტორიაზე შეიძლება ბინადრობდნენ</string>
     <string name="title_all_species">ყველა სახეობა</string>
     <string name="subtitle_all_species">ყველა ოფიციალურად რეგისტრირებული სახეობა ქვეყანაში</string>
     <string name="mildly_venomous">სუსტი შხამი</string>
