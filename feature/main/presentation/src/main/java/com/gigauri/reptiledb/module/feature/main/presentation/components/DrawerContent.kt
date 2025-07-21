@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -40,10 +41,16 @@ fun DrawerContent(
         modifier = Modifier
             .width(320.dp)
             .fillMaxHeight()
-            .clip(RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp))
+            .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 0.dp))
             .background(
-                HerpiColors.DarkGreenMain,
-                RoundedCornerShape(topEnd = 32.dp, bottomEnd = 32.dp)
+                Brush.linearGradient(
+                    listOf(
+                        HerpiColors.LightGreen,
+                        HerpiColors.DarkGreenMain,
+                        HerpiColors.DarkerGreenMain,
+                    )
+                ),
+                RoundedCornerShape(topEnd = 24.dp, bottomEnd = 0.dp)
             )
             .systemBarsPadding()
     ) {

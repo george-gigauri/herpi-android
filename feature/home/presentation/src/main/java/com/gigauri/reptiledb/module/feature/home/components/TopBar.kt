@@ -43,7 +43,7 @@ fun TopBar(
             .fillMaxWidth()
             .wrapContentHeight()
             .statusBarsPadding()
-            .padding(bottom = 20.dp)
+            .padding(bottom = 24.dp, top = 12.dp)
     ) {
 
         // Drawer Burger Icon

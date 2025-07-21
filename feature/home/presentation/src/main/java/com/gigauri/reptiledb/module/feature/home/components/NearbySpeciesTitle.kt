@@ -14,16 +14,18 @@ import com.gigauri.reptiledb.module.feature.home.R
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun NearbySpeciesTitle() {
+fun NearbySpeciesTitle(
+
+) {
     Column {
         PrimaryTextDarkGray(
             text = stringResource(id = R.string.title_nearby_species),
-            modifier = Modifier.padding(horizontal = 32.dp)
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
         VerticalMargin(size = 4.dp)
         SecondaryTextLighterDark(
             text = stringResource(id = R.string.subtitle_nearby_species),
-            modifier = Modifier.padding(horizontal = 32.dp)
+            modifier = Modifier.padding(horizontal = 24.dp)
         )
     }
 }
