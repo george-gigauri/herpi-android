@@ -63,15 +63,15 @@ fun TeamMember(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier)
-            .clip(RoundedCornerShape(16.dp))
+            .clip(RoundedCornerShape(12.dp))
             .clickable { onClick() }
-            .background(HerpiColors.White)
+            .background(HerpiColors.LightGray.copy(alpha = 0.12f))
             .border(
                 BorderStroke(
                     animateBorderWidth,
                     HerpiColors.DarkGreenMain
                 ),
-                RoundedCornerShape(16.dp)
+                RoundedCornerShape(12.dp)
             )
             .padding(16.dp)
     ) {
@@ -118,7 +118,8 @@ fun TeamMember(
                 SecondaryTextLighterDark(
                     text = data.role,
                     size = 14.sp,
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 1
+                    maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                    color = HerpiColors.DarkGray.copy(alpha = 0.85f)
                 )
             }
 

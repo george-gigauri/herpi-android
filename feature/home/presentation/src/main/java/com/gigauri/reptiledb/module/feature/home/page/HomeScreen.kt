@@ -82,9 +82,7 @@ fun HomeScreen(
     val context = LocalContext.current
     var isInternetAvailable: Boolean by rememberSaveable {
         mutableStateOf(
-            NetworkUtil.isInternetAvailable(
-                context
-            )
+            NetworkUtil.isInternetAvailable(context)
         )
     }
     val viewModel: HomeViewModel = hiltViewModel()

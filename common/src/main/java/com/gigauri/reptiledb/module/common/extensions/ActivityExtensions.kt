@@ -17,7 +17,7 @@ fun Context.wrapLocale(locale: Locale): Context {
 }
 
 
-fun Activity.loadLocate(code: String) {
+fun Activity.loadLocale(code: String) {
     val locale = Locale(code)
     Locale.setDefault(locale)
     val config: Configuration = resources.configuration
