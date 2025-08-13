@@ -25,6 +25,15 @@ fun Activity.loadLocale(code: String) {
     resources.updateConfiguration(config, resources.displayMetrics)
 }
 
+fun Context.setLocale(code: String): Context {
+    val locale = Locale(code)
+    Locale.setDefault(locale)
+
+    val config = Configuration(resources.configuration)
+    config.setLocale(locale)
+    return createConfigurationContext(config)
+}
+
 fun Activity.transparentStatusAndNavigation() {
     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

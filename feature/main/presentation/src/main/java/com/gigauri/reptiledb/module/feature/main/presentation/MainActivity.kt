@@ -31,6 +31,7 @@ import android.util.Log
 import android.widget.Toast
 import com.gigauri.reptiledb.module.common.BuildConfig
 import com.gigauri.reptiledb.module.common.extensions.loadLocale
+import com.gigauri.reptiledb.module.common.extensions.setLocale
 import com.gigauri.reptiledb.module.common.extensions.wrapLocale
 import com.gigauri.reptiledb.module.core.domain.common.LocaleManager
 import com.gigauri.reptiledb.module.core.domain.usecase.app.GetAppLanguage
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        runBlocking { viewModel.language.firstOrNull()?.let(::loadLocale) }
+        loadLocale(LocaleManager.currentLang)
         initInAppUpdate()
 
         Configuration.getInstance()
@@ -111,8 +112,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val context = newBase.wrapLocale(Locale(LocaleManager.currentLang))
-        super.attachBaseContext(context)
+        val localeUpdatedContext = newBase.setLocale(LocaleManager.currentLang)
+        super.attachBaseContext(localeUpdatedContext)
     }
 
     override fun onStart() {
