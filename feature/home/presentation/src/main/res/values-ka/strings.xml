@@ -21,6 +21,6 @@
     <string name="subtitle_pick_custom_location">რეგიონის ასარჩევად მონიშნე სასურველი არეალი რუკაზე</string>
     <string name="btn_complete">დასრულება</string>
     <string name="btn_cancel">გაუქმება</string>
-    <string name="message_nearby_species_not_found">შენს არეალში გავრცელებული სახეობები ვერ მოიძებნა… შესაძლო მიზეზი შეიძლება იყოს ის რომ არ იმყოფებით ამჟამად აქტიურ ქვეყნებში, არ გაქვთ ადგილმდებარეობის გაზიარებაზე წვდომა მოცემული ან გამორთული გაქვთ GPS. გთხოვთ შეამოწმოთ ადგილმდებარეობის პარამეტრები ან დაგვიკავშირდით.</string>
+    <string name="message_nearby_species_not_found">შენს არეალში გავრცელებული სახეობები ვერ მოიძებნა…</string>
     <string name="label_offline_mode">უინტერნეტო</string>
 </resources>

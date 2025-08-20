@@ -17,12 +17,21 @@ fun Context.wrapLocale(locale: Locale): Context {
 }
 
 
-fun Activity.loadLocate(code: String) {
+fun Activity.loadLocale(code: String) {
     val locale = Locale(code)
     Locale.setDefault(locale)
     val config: Configuration = resources.configuration
     config.setLocale(locale)
     resources.updateConfiguration(config, resources.displayMetrics)
+}
+
+fun Context.setLocale(code: String): Context {
+    val locale = Locale(code)
+    Locale.setDefault(locale)
+
+    val config = Configuration(resources.configuration)
+    config.setLocale(locale)
+    return createConfigurationContext(config)
 }
 
 fun Activity.transparentStatusAndNavigation() {

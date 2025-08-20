@@ -21,6 +21,6 @@
     <string name="subtitle_pick_custom_location">Pick your location manually tapping on deisred area</string>
     <string name="btn_complete">Complete</string>
     <string name="btn_cancel">Cancel</string>
-    <string name="message_nearby_species_not_found">Nearby species not found… This may be because you are outside of the supported countries, your GPS is turned off or you did not allow us to access your location. Please turn GPS on and try again or pick your location manually. If the problem persists, contact us.</string>
+    <string name="message_nearby_species_not_found">Nearby species not found… If you are inside the service area, please turn on your GPS</string>
     <string name="label_offline_mode">Offline Mode</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gigauri.reptiledb.module.common.Const
-import com.gigauri.reptiledb.module.common.extensions.loadLocate
 import com.gigauri.reptiledb.module.core.presentation.HerpiDefaultTheme
 import com.google.android.gms.tasks.Task
 import com.google.android.play.core.appupdate.AppUpdateInfo
@@ -30,9 +29,13 @@ import android.net.Uri
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import com.gigauri.reptiledb.module.common.BuildConfig
+import com.gigauri.reptiledb.module.common.extensions.loadLocale
+import com.gigauri.reptiledb.module.common.extensions.setLocale
 import com.gigauri.reptiledb.module.common.extensions.wrapLocale
 import com.gigauri.reptiledb.module.core.domain.common.LocaleManager
 import com.gigauri.reptiledb.module.core.domain.usecase.app.GetAppLanguage
+import kotlinx.coroutines.flow.singleOrNull
 import org.osmdroid.config.Configuration
 import java.util.Locale
 import javax.inject.Inject
@@ -53,6 +56,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadLocale(LocaleManager.currentLang)
         initInAppUpdate()
 
         Configuration.getInstance()
@@ -73,19 +77,19 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun checkForUpdate() {
-        //  if (!BuildConfig.DEBUG) {
-        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                viewModel.analytics.logEvent(Const.Event.SHOW_UPDATE_POPUP, mapOf())
-                if (appUpdateInfo.isFlexibleUpdateAllowed) {
-                    startFlexibleInAppUpdate(appUpdateInfo)
-                }
-                if (appUpdateInfo.isImmediateUpdateAllowed) {
-                    startImmediateInAppUpdate(appUpdateInfo)
+        if (!BuildConfig.DEBUG) {
+            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                    viewModel.analytics.logEvent(Const.Event.SHOW_UPDATE_POPUP, mapOf())
+                    if (appUpdateInfo.isFlexibleUpdateAllowed) {
+                        startFlexibleInAppUpdate(appUpdateInfo)
+                    }
+                    if (appUpdateInfo.isImmediateUpdateAllowed) {
+                        startImmediateInAppUpdate(appUpdateInfo)
+                    }
                 }
             }
         }
-        // }
     }
 
     private fun startFlexibleInAppUpdate(appUpdateInfo: AppUpdateInfo) {
@@ -108,8 +112,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val context = newBase.wrapLocale(Locale(LocaleManager.currentLang))
-        super.attachBaseContext(context)
+        val localeUpdatedContext = newBase.setLocale(LocaleManager.currentLang)
+        super.attachBaseContext(localeUpdatedContext)
     }
 
     override fun onStart() {

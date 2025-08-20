@@ -61,7 +61,7 @@ fun TeamScreen(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                .background(HerpiColors.LightWindowBg)
+                .background(HerpiColors.White)
         ) {
 
             // Title Team
@@ -120,6 +120,8 @@ fun TeamScreen(
                             modifier = Modifier.padding(vertical = 8.dp)
                         )
                     }
+
+                    VerticalMargin(24.dp)
                 }
             }
         }

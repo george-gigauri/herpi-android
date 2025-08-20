@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.gigauri.reptiledb.module.common.extensions.loadLocate
+import com.gigauri.reptiledb.module.common.extensions.loadLocale
 import com.gigauri.reptiledb.module.core.presentation.HerpiDefaultTheme
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.viewModels.ReptileDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +18,7 @@ class ReptileDetailsActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        runBlocking { viewModel.appLanguage.firstOrNull()?.let(::loadLocate) }
+        runBlocking { viewModel.appLanguage.firstOrNull()?.let(::loadLocale) }
         setContent {
             HerpiDefaultTheme {
                 ReptileDetailsScreen(viewModel)

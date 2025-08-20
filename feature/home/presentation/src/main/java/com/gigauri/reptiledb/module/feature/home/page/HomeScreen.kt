@@ -28,6 +28,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -35,8 +36,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -82,9 +85,7 @@ fun HomeScreen(
     val context = LocalContext.current
     var isInternetAvailable: Boolean by rememberSaveable {
         mutableStateOf(
-            NetworkUtil.isInternetAvailable(
-                context
-            )
+            NetworkUtil.isInternetAvailable(context)
         )
     }
     val viewModel: HomeViewModel = hiltViewModel()
@@ -184,7 +185,7 @@ fun HomeScreen(
             ) {
                 // Search Box
                 if (isInternetAvailable) {
-                    item { VerticalMargin(size = 24.dp) }
+                    item { VerticalMargin(size = 32.dp) }
                     item {
                         SearchBox(
                             onClick = onSearchBoxClick,
@@ -229,8 +230,23 @@ fun HomeScreen(
                         item { NearbySpeciesNotFound() }
                     } else {
                         if (state.isNearbyLoading) {
-                            items(10) {
-                                NearbySpeciesShimmer()
+//                            items(10) {
+//                                NearbySpeciesShimmer()
+//                            }
+                            item {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    LinearProgressIndicator(
+                                        color = HerpiColors.DarkGreenMain,
+                                        strokeCap = StrokeCap.Round,
+                                        trackColor = HerpiColors.DarkGreenMain.copy(alpha = 0.25f),
+                                        modifier = Modifier
+                                            .width(96.dp)
+                                            .align(Alignment.Center)
+                                            .padding(vertical = 32.dp)
+                                    )
+                                }
                             }
                         } else {
                             item { VerticalMargin(size = 12.dp) }
