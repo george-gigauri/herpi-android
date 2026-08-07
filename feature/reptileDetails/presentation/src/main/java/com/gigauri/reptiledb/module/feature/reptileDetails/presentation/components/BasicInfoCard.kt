@@ -53,7 +53,9 @@ fun BasicInfoCard(
                     .padding(end = 12.dp)
             )
             // is venomous
-            data.VenomousLabel(
+            VenomousLabel(
+                isVenomous = data.isVenomous,
+                hasMildVenom = data.hasMildVenom,
                 textSize = 13.sp
             )
         }

@@ -1,9 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
+    id("org.jetbrains.kotlin.android")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
@@ -28,7 +29,6 @@ android {
             keyAlias = getSecretKeys()["KEY_ALIAS"] as? String
         }
     }
-
     compileSdk = ProjectConfig.compileSdk
 
     defaultConfig {
@@ -68,16 +68,18 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
     buildFeatures {
         compose = false
         buildConfig = true
     }
 
     namespace = "com.gigauri.reptiledb"
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
+    }
 }
 
 dependencies {
@@ -92,6 +94,7 @@ dependencies {
     implementation(project(path = ":feature:main:presentation"))
     implementation(project(path = ":feature:team:data"))
     implementation(project(path = ":feature:faq:data"))
+    implementation(project(path = ":feature:herpetogallery:data"))
     implementation("androidx.hilt:hilt-work:1.2.0")
 
     workManager()

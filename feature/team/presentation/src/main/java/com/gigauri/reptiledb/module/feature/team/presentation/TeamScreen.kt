@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
+import android.net.Uri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gigauri.reptiledb.module.common.Const
@@ -91,7 +91,7 @@ fun TeamScreen(
                             isExpanded = member.id == state.expandedItemId,
                             onEmailClick = {
                                 Intent(Intent.ACTION_SENDTO).apply {
-                                    data = "mailto:${member.email}".toUri()
+                                    data = Uri.parse("mailto:${member.email}")
                                     putExtra(Intent.EXTRA_EMAIL, member.email)
                                 }.let { intent ->
                                     context.startActivity(intent)

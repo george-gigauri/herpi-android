@@ -18,57 +18,11 @@ import androidx.compose.ui.unit.sp
 import com.gigauri.reptiledb.module.core.domain.model.Reptile
 import com.gigauri.reptiledb.module.core.presentation.HerpiColors
 import com.gigauri.reptiledb.module.core.presentation.R
-import com.gigauri.reptiledb.module.feature.reptileDetails.domain.model.ReptileFull
 
 @Composable
-fun Reptile.VenomousLabel(
-    textSize: TextUnit = 12.sp,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        text = if (venomous) {
-            if (hasMildVenom) {
-                stringResource(id = R.string.label_mildly_venomous)
-            } else {
-                stringResource(id = R.string.label_venomous)
-            }
-        } else if (hasMildVenom) {
-            stringResource(id = R.string.label_mildly_venomous)
-        } else {
-            stringResource(id = R.string.label_non_venomous)
-        },
-        fontSize = textSize,
-        fontWeight = FontWeight.SemiBold,
-        color = HerpiColors.White,
-        style = TextStyle(
-            platformStyle = PlatformTextStyle(
-                includeFontPadding = false
-            )
-        ),
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier
-            .then(modifier)
-            .clip(RoundedCornerShape(100))
-            .background(
-                if (venomous) {
-                    if (hasMildVenom) {
-                        HerpiColors.OrangeYellow
-                    } else {
-                        HerpiColors.NormalRed
-                    }
-                } else if (hasMildVenom) {
-                    HerpiColors.OrangeYellow
-                } else {
-                    HerpiColors.LightGreen
-                }
-            )
-            .padding(horizontal = 12.dp, vertical = 6.dp)
-    )
-}
-
-@Composable
-fun ReptileFull.VenomousLabel(
+fun VenomousLabel(
+    isVenomous: Boolean,
+    hasMildVenom: Boolean,
     textSize: TextUnit = 12.sp,
     modifier: Modifier = Modifier
 ) {
@@ -111,5 +65,18 @@ fun ReptileFull.VenomousLabel(
                 }
             )
             .padding(horizontal = 12.dp, vertical = 6.dp)
+    )
+}
+
+@Composable
+fun Reptile.VenomousLabel(
+    textSize: TextUnit = 12.sp,
+    modifier: Modifier = Modifier
+) {
+    VenomousLabel(
+        isVenomous = venomous,
+        hasMildVenom = hasMildVenom,
+        textSize = textSize,
+        modifier = modifier
     )
 }

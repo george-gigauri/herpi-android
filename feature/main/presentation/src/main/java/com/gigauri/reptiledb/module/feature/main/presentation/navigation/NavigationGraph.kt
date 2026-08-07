@@ -19,6 +19,7 @@ import com.gigauri.reptiledb.module.feature.home.page.HomeScreen
 import com.gigauri.reptiledb.module.feature.reptileDetails.presentation.pages.ReptileDetailsScreen
 import com.gigauri.reptiledb.module.feature.search.presentation.pages.SearchScreen
 import com.gigauri.reptiledb.module.feature.team.presentation.TeamScreen
+import ge.gigauri.herpi.feature.herpetogallery.presentation.pages.HerpetogalleryScreen
 
 @Composable
 fun NavigationGraph(
@@ -47,6 +48,19 @@ fun NavigationGraph(
                     navController.navigate(Pages.Search.pageId)
                 },
                 openReptileDetail = {
+                    navController.navigate(Pages.ReptileDetails.pageId + "/${it.id}")
+                }
+            )
+        }
+
+        composable(
+            route = Pages.HerpetoGallery.pageId,
+        ) {
+            HerpetogalleryScreen(
+                onBackClick = {
+                    navController.navigateUp()
+                },
+                onReptileClick = {
                     navController.navigate(Pages.ReptileDetails.pageId + "/${it.id}")
                 }
             )

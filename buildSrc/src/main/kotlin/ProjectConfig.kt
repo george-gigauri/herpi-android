@@ -1,6 +1,6 @@
 object ProjectConfig {
     const val appId = "com.gigauri.reptiledb"
-    const val compileSdk = 36
+    const val compileSdk = 37
     const val minSdk = 21
     const val targetSdk = 36
 

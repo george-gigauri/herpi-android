@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken
 
 class GsonParser {
 
-    inline fun <reified T> toJson(i: T?): String {
+    fun <T> toJson(i: T?): String {
         if (i == null) return ""
         return Gson().toJson(i)
     }

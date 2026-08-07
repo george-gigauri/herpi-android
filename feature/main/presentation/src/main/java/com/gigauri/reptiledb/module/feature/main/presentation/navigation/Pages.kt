@@ -15,6 +15,12 @@ sealed class Pages(
         "home"
     )
 
+    data object HerpetoGallery: Pages(
+        R.string.nav_herpetogallery,
+        false,
+        "herpetogallery"
+    )
+
     data object Contact : Pages(
         R.string.nav_contact,
         false,
@@ -46,6 +52,6 @@ sealed class Pages(
     )
 
     companion object {
-        fun all(): List<Pages> = listOf(Home, Contact, Team, Faq)
+        fun all(): List<Pages> = listOf(Home, HerpetoGallery, Contact, Team, Faq)
     }
 }

@@ -3,11 +3,13 @@ plugins {
 }
 
 repositories {
+    google()
     mavenCentral()
 }
 
-//dependencies {
-//    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.22")
-//    implementation("com.android.tools.build:gradle:8.2.2")
-//    implementation("javax.inject:javax.inject:1")
-//}
+dependencies {
+    implementation("com.android.tools.build:gradle:9.3.1")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.10")
+    implementation("com.google.dagger:hilt-android-gradle-plugin:2.56")
+    implementation("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:2.3.6")
+}
