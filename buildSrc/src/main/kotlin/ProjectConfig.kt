@@ -4,8 +4,8 @@ object ProjectConfig {
     const val minSdk = 21
     const val targetSdk = 36
 
-    const val versionCode = 41
-    const val versionName = "3.0.17"
+    const val versionCode = 42
+    const val versionName = "3.0.18"
 
     const val isMinifyEnabled = false
 }

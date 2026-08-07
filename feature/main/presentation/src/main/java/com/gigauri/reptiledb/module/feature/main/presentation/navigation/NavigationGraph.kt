@@ -47,6 +47,9 @@ fun NavigationGraph(
                 onSearchBoxClick = {
                     navController.navigate(Pages.Search.pageId)
                 },
+                onHerpetoGalleryBannerClick = {
+                    navController.navigate(Pages.HerpetoGallery.pageId)
+                },
                 openReptileDetail = {
                     navController.navigate(Pages.ReptileDetails.pageId + "/${it.id}")
                 }
@@ -55,6 +58,14 @@ fun NavigationGraph(
 
         composable(
             route = Pages.HerpetoGallery.pageId,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "${Const.HERPI_URL}/{lang}/gallery"
+                },
+                navDeepLink {
+                    uriPattern = "${Const.HERPI_URL}/gallery"
+                }
+            )
         ) {
             HerpetogalleryScreen(
                 onBackClick = {

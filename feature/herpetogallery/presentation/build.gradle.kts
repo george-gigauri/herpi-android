@@ -19,6 +19,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:presentation"))
     implementation(project(":feature:herpetogallery:domain"))
+    implementation(project(":imageViewer"))
 
     coil()
     pagingRuntimeCompose()

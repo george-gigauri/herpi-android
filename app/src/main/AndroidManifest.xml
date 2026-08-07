@@ -25,6 +25,7 @@
             <tools:validation testUrl="https://herpi.ge/faq" />
             <tools:validation testUrl="https://herpi.ge/" />
             <tools:validation testUrl="https://herpi.ge/reptiles/15/details" />
+            <tools:validation testUrl="https://herpi.ge/ka/gallery" />
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,6 +46,8 @@
                 <data android:pathPrefix="/faq" />
                 <data android:pathPattern="/reptiles/.*/details" />
                 <data android:pathPattern="/.*/view/.*" />
+                <data android:pathPattern="/.*/gallery" />
+                <data android:pathPrefix="/gallery" />
             </intent-filter>
         </activity>
 

@@ -42,7 +42,6 @@ class App : Application(), Configuration.Provider {
 
         UpdateOfflineDataWorker.startPeriodicWork(this@App)
 
-        // Preload locale into static memory
         CoroutineScope(Dispatchers.Default).launch {
             val lang = getAppLanguage.execute().firstOrNull() ?: "ka"
             LocaleManager.currentLang = lang

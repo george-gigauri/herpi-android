@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="title_herpetogallery">ჰერპეტოგალერეა</string>
-    <string name="label_venomous">შხამიანი</string>
-    <string name="label_mild_venom">ნახევრად შხამიანი</string>
-    <string name="label_non_venomous">უშხამო</string>
-    <string name="label_view">ნახვა</string>
-</resources>

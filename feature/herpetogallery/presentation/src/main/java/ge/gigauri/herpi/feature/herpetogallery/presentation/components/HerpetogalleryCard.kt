@@ -1,5 +1,6 @@
 package ge.gigauri.herpi.feature.herpetogallery.presentation.components
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,18 +22,25 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.gigauri.reptiledb.module.core.domain.model.Author
 import com.gigauri.reptiledb.module.core.domain.model.Reptile
+import com.gigauri.reptiledb.module.core.presentation.components.HorizontalMargin
 import com.gigauri.reptiledb.module.core.presentation.extensions.VenomousLabel
 import ge.gigauri.herpi.feature.herpetogallery.domain.model.HerpetogalleryItem
 import ge.gigauri.herpi.feature.herpetogallery.presentation.R
@@ -50,8 +59,12 @@ import kotlin.random.Random
 fun HerpetogalleryCard(
     item: HerpetogalleryItem,
     onViewClick: () -> Unit,
+    onImageClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
+    var isAuthorNameVisible by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -59,7 +72,11 @@ fun HerpetogalleryCard(
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable { onImageClick() }
+        ) {
             // Background Image
             AsyncImage(
                 model = item.imageUrl,
@@ -95,8 +112,10 @@ fun HerpetogalleryCard(
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .weight(1f, fill = false)
-                            .clip(CircleShape)
+                            .clip(RoundedCornerShape(100))
+                            .clickable(onClick = {
+                                isAuthorNameVisible = !isAuthorNameVisible
+                            })
                             .background(Color(0xFF1E282A).copy(alpha = 0.85f))
                             .padding(horizontal = 4.dp, vertical = 4.dp)
                     ) {
@@ -107,26 +126,53 @@ fun HerpetogalleryCard(
                             modifier = Modifier
                                 .size(24.dp)
                                 .clip(CircleShape)
+                                .background(Color.DarkGray)
                         )
-//                        Spacer(modifier = Modifier.width(6.dp))
-//                        Text(
-//                            text = author.name,
-//                            color = Color.White,
-//                            fontSize = 12.sp,
-//                            fontWeight = FontWeight.SemiBold,
-//                            maxLines = 1,
-//                            overflow = TextOverflow.Ellipsis
-//                        )
+                        AnimatedVisibility(
+                            visible = !isAuthorNameVisible
+                        ) {
+                            Row {
+                                HorizontalMargin(4.dp)
+                                Icon(
+                                    imageVector = Icons.Default.Info,
+                                    contentDescription = null,
+                                    tint = Color.White,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                )
+                                HorizontalMargin(2.dp)
+                            }
+                        }
+                        AnimatedVisibility(
+                            visible = isAuthorNameVisible
+                        ) {
+                            Row {
+                                Spacer(modifier = Modifier.width(6.dp))
+                                Text(
+                                    text = author.name,
+                                    color = Color.White,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    maxLines = 1,
+                                )
+                                Spacer(modifier = Modifier.width(6.dp))
+                            }
+                        }
                     }
                 }
 
-                Spacer(modifier = Modifier.weight(1f))
-
                 // Venom Status Badge using standard VenomousLabel extension
-                item.reptile.VenomousLabel(
-                    textSize = 10.sp,
-                    modifier = Modifier
-                )
+                AnimatedVisibility(
+                    visible = !isAuthorNameVisible,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        item.reptile.VenomousLabel(
+                            textSize = 10.sp,
+                            modifier = Modifier.align(Alignment.CenterEnd)
+                        )
+                    }
+                }
             }
 
             // Bottom Content: Reptile Names & View Button

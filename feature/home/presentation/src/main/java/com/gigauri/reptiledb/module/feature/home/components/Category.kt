@@ -47,7 +47,7 @@ fun Category(
     ) {
         Box(
             modifier = Modifier
-                .size(90.dp, 95.dp)
+                .size(90.dp, 90.dp)
                 .clip(RoundedCornerShape(16.dp))
                 .border(
                     1.dp,

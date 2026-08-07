@@ -23,6 +23,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +49,7 @@ import ge.gigauri.herpi.feature.herpetogallery.domain.model.HerpetogalleryItem
 import ge.gigauri.herpi.feature.herpetogallery.presentation.R
 import ge.gigauri.herpi.feature.herpetogallery.presentation.components.HerpetogalleryCard
 import ge.gigauri.herpi.feature.herpetogallery.presentation.viewmodel.HerpetogalleryViewModel
+import ge.herpi.imageviewer.FullScreenImageViewer
 import kotlinx.coroutines.flow.flowOf
 import kotlin.random.Random
 
@@ -67,6 +73,9 @@ private fun Content(
     onReptileClick: (Reptile) -> Unit,
     pagingItems: LazyPagingItems<HerpetogalleryItem>,
 ) {
+    var isImageViewerOpen by rememberSaveable { mutableStateOf(false) }
+    var selectedImageIndex by rememberSaveable { mutableIntStateOf(0) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -125,7 +134,11 @@ private fun Content(
                         pagingItems[index]?.let { item ->
                             HerpetogalleryCard(
                                 item = item,
-                                onViewClick = { onReptileClick(item.reptile) }
+                                onViewClick = { onReptileClick(item.reptile) },
+                                onImageClick = {
+                                    selectedImageIndex = index
+                                    isImageViewerOpen = true
+                                }
                             )
                         }
                     }
@@ -152,6 +165,24 @@ private fun Content(
                 }
             }
         }
+    }
+
+    if (isImageViewerOpen && pagingItems.itemCount > 0) {
+        val allItems = (0 until pagingItems.itemCount).mapNotNull { pagingItems[it] }
+        FullScreenImageViewer(
+            images = allItems.map { it.imageUrl },
+            defaultPageIndex = selectedImageIndex.coerceAtMost(allItems.size - 1),
+            additionalSubTexts = allItems.map { item ->
+                val creditsStr = if (item.credits.isEmpty()) {
+                    item.author?.name ?: "---"
+                } else {
+                    item.credits.joinToString(", ")
+                }
+                "${item.reptile.name} (${item.reptile.scientificName})\n(C) $creditsStr"
+            },
+            onClose = { isImageViewerOpen = false },
+            isZoomable = true
+        )
     }
 }
 

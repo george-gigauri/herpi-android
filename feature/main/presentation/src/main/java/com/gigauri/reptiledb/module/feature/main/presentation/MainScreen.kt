@@ -84,7 +84,13 @@ fun MainScreen(
     if (selectedLanguage == null) {
         ChooseApplicationLanguageSheet(
             languages = AppLanguages.entries.toList(),
-            onRemember = { viewModel.onEvent(MainEvent.SetLanguage(it)) },
+            onRemember = {
+                viewModel.onEvent(MainEvent.SetLanguage(it))
+                LocaleManager.currentLang = it.code
+                runBlocking { delay(250) }
+                activity.startActivity(Intent(activity, MainActivity::class.java))
+                activity.finish()
+            },
             onCancel = { }
         )
     }

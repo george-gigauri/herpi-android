@@ -3,4 +3,7 @@
     <string name="label_mildly_venomous">სუსტი შხამი</string>
     <string name="label_venomous">შხამიანი</string>
     <string name="label_non_venomous">უშხამო</string>
+    <string name="title_herpetogallery">ჰერპეტოგალერეა</string>
+    <string name="subtitle_herpetogallery">დაათვალიერე ქართული ჰერპეტოფაუნა 💚</string>
+    <string name="label_view">ნახვა</string>
 </resources>

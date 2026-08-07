@@ -3,4 +3,7 @@
     <string name="label_mildly_venomous">Mild Venom</string>
     <string name="label_venomous">Venomous</string>
     <string name="label_non_venomous">Harmless</string>
+    <string name="title_herpetogallery">HerpetoGallery</string>
+    <string name="subtitle_herpetogallery">PhotoCollage from Herpi\'s Team 💚</string>
+    <string name="label_view">View</string>
 </resources>

@@ -57,6 +57,7 @@ import com.gigauri.reptiledb.module.core.presentation.components.HorizontalMargi
 import com.gigauri.reptiledb.module.core.presentation.components.VerticalMargin
 import com.gigauri.reptiledb.module.feature.home.components.AllSpeciesTitle
 import com.gigauri.reptiledb.module.feature.home.components.Category
+import com.gigauri.reptiledb.module.feature.home.components.HerpetoGalleryBanner
 import com.gigauri.reptiledb.module.feature.home.components.NearbyReptile
 import com.gigauri.reptiledb.module.feature.home.components.NearbySpeciesNotFound
 import com.gigauri.reptiledb.module.feature.home.components.NearbySpeciesTitle
@@ -80,6 +81,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 fun HomeScreen(
     onNavDrawerClick: () -> Unit,
     onSearchBoxClick: () -> Unit,
+    onHerpetoGalleryBannerClick: () -> Unit,
     openReptileDetail: (Reptile) -> Unit
 ) {
     val context = LocalContext.current
@@ -221,9 +223,20 @@ fun HomeScreen(
                     }
                 }
 
+                if (isInternetAvailable) {
+                    item { VerticalMargin(24.dp) }
+                    item {
+                        // HerpetoGallery Banner
+                        HerpetoGalleryBanner(
+                            onClick = onHerpetoGalleryBannerClick,
+                            modifier = Modifier.padding(horizontal = 16.dp)
+                        )
+                    }
+                }
+
                 // Nearby Species
                 if (isInternetAvailable) {
-                    item { VerticalMargin(size = 28.dp) }
+                    item { VerticalMargin(size = 32.dp) }
                     item { NearbySpeciesTitle() }
                     item { VerticalMargin(size = 2.dp) }
                     if (state.nearbyReptiles.isEmpty() && !state.isNearbyLoading) {

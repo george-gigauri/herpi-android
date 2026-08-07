@@ -56,7 +56,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loadLocale(LocaleManager.currentLang)
+        val lang = runBlocking { viewModel.language.firstOrNull() } ?: "ka"
+        LocaleManager.currentLang = lang
+        loadLocale(lang)
         initInAppUpdate()
 
         Configuration.getInstance()
@@ -123,8 +125,11 @@ class MainActivity : ComponentActivity() {
 
         val prevLanguage = runBlocking { viewModel.language.firstOrNull() }
         lifecycleScope.launch {
-            viewModel.language.collectLatest {
-                if (prevLanguage != it) {
+            viewModel.language.collectLatest { lang ->
+                if (lang != null) {
+                    LocaleManager.currentLang = lang
+                }
+                if (prevLanguage != null && prevLanguage != lang) {
                     this@MainActivity.recreate()
                 }
             }
